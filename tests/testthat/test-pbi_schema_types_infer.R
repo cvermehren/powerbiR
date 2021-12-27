@@ -1,6 +1,17 @@
+
+
+# Logical & character test ------------------------------------------------------------
+
 test_that("Logical vector is infered as 'Boolean'", {
   expect_equal(pbi_schema_types_infer(c(TRUE, FALSE)), "Boolean")
 })
+
+test_that("Character vector is infered as 'String'", {
+  expect_equal(pbi_schema_types_infer(as.character(c(TRUE, FALSE))), "String")
+})
+
+
+# Numeric test ------------------------------------------------------------
 
 test_that("Integer vector is infered as 'Int64'", {
   expect_equal(pbi_schema_types_infer(as.integer(c(1, 2))), "Int64")
@@ -10,18 +21,32 @@ test_that("Double vector is infered as 'Double'", {
   expect_equal(pbi_schema_types_infer( as.double(c(1, 2))), "Double")
 })
 
-test_that("Date vector is infered as 'Date'", {
+test_that("Numeric vector is infered as 'Double'", {
+  expect_equal(pbi_schema_types_infer( as.numeric(c(1, 2))), "Double")
+})
+
+
+
+# DateTime test -----------------------------------------------------------
+
+test_that("Date vector is infered as 'DateTimer'", {
   expect_equal(pbi_schema_types_infer( as.Date(c("2021-01-01", "2021-01-02"))), "DateTime")
 })
 
-test_that("Date vector is infered as 'Date'", {
+test_that("Date vector is infered as 'DateTimer'", {
   expect_equal(pbi_schema_types_infer( Sys.Date()), "DateTime")
 })
 
-test_that("Time vector is infered as 'Date'", {
+test_that("Time vector is infered as 'DateTime'", {
   expect_equal(pbi_schema_types_infer( Sys.time()), "DateTime")
 })
 
 test_that("Factor vector is infered as 'String'", {
   expect_equal(pbi_schema_types_infer( factor(c("Man", "Woman"))), "String")
 })
+
+
+
+# class(Sys.time())[1]
+#
+# class(c(1))
