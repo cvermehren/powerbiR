@@ -12,7 +12,8 @@ LazyData: true
 RoxygenNote: 7.1.2
 Imports: 
     data.table,
-    methods
+    methods,
+    jsonlite
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

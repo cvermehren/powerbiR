@@ -2,7 +2,7 @@
 % Please edit documentation in R/internal.R
 \name{pbi_schema_types_infer}
 \alias{pbi_schema_types_infer}
-\title{Infer the Power BI data type of a vector}
+\title{Get Power BI data type}
 \usage{
 pbi_schema_types_infer(vector)
 }
@@ -13,7 +13,7 @@ pbi_schema_types_infer(vector)
 A string indicating the Power BI data type of the vector.
 }
 \description{
-This function converts the class of a vector to the equivalent data type in Power BI.
+This function detects an R vector's class and converts it into the equivalent data type in Power BI.
 }
 \examples{
 sapply(iris, pbi_schema_types_infer)
