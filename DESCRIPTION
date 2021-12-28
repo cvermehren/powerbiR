@@ -5,7 +5,7 @@ Version: 0.1.0
 Authors@R: person("Christian", "Vermehren", email = "cv@cantab.net",
   role = c("aut", "cre"))
 Description: Provides functions for accessing and pushing data 
-    using the Power BI APIs <https://docs.microsoft.com/en-us/rest/api/power-bi/>.
+    using the Power BI API <https://docs.microsoft.com/en-us/rest/api/power-bi/>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
