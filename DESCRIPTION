@@ -2,10 +2,10 @@ Package: powerbiR
 Type: Package
 Title: A Power BI API Client
 Version: 0.1.0
-Author: person("Christian", "Vermehren", email = "cv@cantab.net", role = c("cre","aut"))
-Maintainer: The package maintainer <cv@cantab.net>
+Authors@R: person("Christian", "Vermehren", email = "cv@cantab.net",
+  role = c("aut", "cre"))
 Description: Provides functions for accessing and pushing data 
-    using the Power BI APIs (https://docs.microsoft.com/en-us/rest/api/power-bi/).
+    using the Power BI APIs <https://docs.microsoft.com/en-us/rest/api/power-bi/>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

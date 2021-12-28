@@ -2,7 +2,7 @@
 #'
 #' @description This function detects an R vector's class and converts it into the equivalent data type in Power BI.
 #'
-#' @param vector A vector of type POSIXt, Date, Factor, Logical, Double, Integer, Numeric or Character.
+#' @param vector An atomic vector of type POSIXt, Date, Factor, Logical, Double, Integer, Numeric or Character.
 #'
 #' @return A string indicating the Power BI data type of the vector.
 #' @export
@@ -10,6 +10,9 @@
 #' @examples sapply(iris, pbi_schema_types_infer)
 
 pbi_schema_types_infer <- function(vector) {
+
+  if( !is.atomic(vector) ) stop('The argument must be an atomic vector')
+
   if (methods::is(vector, "Date")) return("DateTime")
   else if (methods::is(vector, "POSIXt")) return("DateTime")
   else if (is.factor(vector)) return("String")

@@ -7,7 +7,7 @@
 pbi_schema_types_infer(vector)
 }
 \arguments{
-\item{vector}{A vector of type POSIXt, Date, Factor, Logical, Double, Integer, Numeric or Character.}
+\item{vector}{An atomic vector of type POSIXt, Date, Factor, Logical, Double, Integer, Numeric or Character.}
 }
 \value{
 A string indicating the Power BI data type of the vector.
