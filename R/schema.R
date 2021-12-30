@@ -92,6 +92,14 @@ pbi_schema_create <- function(
 #'   toColumn = "id",
 #'   crossFilteringBehavior = "bothDirections"
 #'   )
+#'
+#' # Add relations to schema
+#' relations_list <- list(relations)
+#'
+#' schema <- pbi_schema_add_relations(
+#'   schema = schema,
+#'   rel_list = relations_list
+#'   )
 pbi_schema_add_relations <- function(schema, rel_list) {
 
   rel_list <- lapply(rel_list, jsonlite::unbox)
