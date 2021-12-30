@@ -1,16 +1,6 @@
-#' Get Power BI data type
-#'
-#' This function detects an R vector's class and converts it into the equivalent
-#' data type in Power BI.
-#'
-#' @param vector An atomic vector of type POSIXt, Date, Factor, Logical, Double,
-#'   Integer, Numeric or Character.
-#'
-#' @return A string indicating the Power BI data type of the vector.
-#' @export
-#'
-#' @examples sapply(iris, pbi_schema_types_infer)
-
+# Infer Power BI data types from a data frame. Used by pbi_schema_column_prop().
+# Takes an atomic vector as argument. Returns a string indicating the Power BI
+# data type of the vector.
 pbi_schema_types_infer <- function(vector) {
 
   if( !is.atomic(vector) ) stop('The argument must be an atomic vector')
@@ -22,27 +12,9 @@ pbi_schema_types_infer <- function(vector) {
   else if (is.double(vector)) return("Double")
   else if (is.integer(vector)) return("Int64")
   else return("String")
-  }
+}
 
-
-#' Set Power BI column properties
-#'
-#' This function defines the Power BI column properties of a data frame.
-#'
-#' @param dt A data frame.
-#' @param table_name The name given to the data frame. Default is 'table1'.
-#' @param date_format How the datetime columns should be formatted. Default is
-#'   'yyyy-mm-dd'.
-#' @param integer_format How the integer columns should be formatted. Default is
-#'   '#,###0'.
-#' @param double_format How the double columns should be formatted. Default is
-#'   '#,###.00'.
-#'
-#' @return A nested data.table indicating the name of the table and the column
-#'   formats.
-#' @export
-#'
-
+# Defines Power BI formats for columns of a data frame.
 pbi_schema_column_prop <- function(
   dt,
   table_name = "table1",
@@ -82,20 +54,6 @@ pbi_schema_column_prop <- function(
 
 }
 
-
-#' Set Power BI table properties
-#'
-#' This function defines the Power BI table properties of a data frame.
-#'
-#' @param dt A data frame.
-#' @param date_format The Power BI format of date columns. Default is 'yyyy-mm-dd'.
-#' @param integer_format The Power BI format of integer columns. Default is '#,###0'.
-#' @param double_format The Power BI format of double columns. Default is '#,###.00'.
-#'
-#' @return A nested data.table.
-#' @export
-#'
-#' @examples pbi_schema_table_prop(iris)
 pbi_schema_table_prop <- function(
   dt,
   date_format = "yyyy-mm-dd",
