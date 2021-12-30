@@ -1,6 +1,4 @@
-# Infer Power BI data types from a data frame. Used by pbi_schema_column_prop().
-# Takes an atomic vector as argument. Returns a string indicating the Power BI
-# data type of the vector.
+# Infer Power BI data types from a data frame. Used in pbi_schema_column_prop().
 pbi_schema_types_infer <- function(vector) {
 
   if( !is.atomic(vector) ) stop('The argument must be an atomic vector')
@@ -14,7 +12,7 @@ pbi_schema_types_infer <- function(vector) {
   else return("String")
 }
 
-# Defines Power BI formats for columns of a data frame.
+# Define Power BI formats for columns of a data frame. Used in pbi_schema_table_prop().
 pbi_schema_column_prop <- function(
   dt,
   table_name = "table1",
@@ -36,7 +34,6 @@ pbi_schema_column_prop <- function(
 
   dob_index <- which(data_types == "Double")
   format_string[dob_index] <- double_format
-
 
   table <- jsonlite::unbox(data.table::data.table(
     name = table_name,
@@ -72,51 +69,53 @@ pbi_schema_table_prop <- function(
 
 }
 
+# Used in pbi_push_table()
+pbi_schema_table_get <- function(schema, table_name = NULL) {
+
+  tables <- schema[["tables"]]
+
+  nm <- list()
+  for (i in seq_along(tables)) { nm[[i]] <- schema[["tables"]][[i]][["name"]] }
+  nm <- unlist(nm)
+  pos <- match(table_name, nm)
+
+  table_schema <- schema[["tables"]][[pos]]
+  #attr(table_schema, "schema_type") <- "table_schema"
+
+  return(table_schema)
+}
+
 
 # Internal api calls ------------------------------------------------------
 
-# pbi_row_push_few <- function(
-#   dt,
-#   group_id,
-#   dataset_id,
-#   table_name
-# ) {
-#
-#   rows <- list(rows = dt)
-#
-#   token <- .pbi_env$token$credentials$access_token
-#   stale_token <- lubridate::as_datetime(as.numeric(.pbi_env$token$credentials$expires_on)) <= Sys.time()
-#   if(stale_token) .pbi_env$token$refresh()
-#
-#   url <- paste0("https://api.powerbi.com/v1.0/myorg/groups/", group_id, "/datasets/", dataset_id, "/tables/", table_name, "/rows")
-#
-#   r <- httr::POST(
-#     url = URLencode(url),
-#     httr::add_headers(
-#       Authorization = paste("Bearer", token)
-#     ),
-#     body = rows,
-#     encode = 'json'
-#   )
-#
-#   print(httr::status_code(r))
-#   if(!httr::status_code(r)==200) print(httr::content(r))
-#
-#   return(r)
-# }
-#
-# pbi_schema_table_get <- function(schema, table_name = NULL) {
-#
-#   tables <- schema[["tables"]]
-#
-#   nm <- list()
-#   for (i in seq_along(tables)) { nm[[i]] <- schema[["tables"]][[i]][["name"]] }
-#   nm <- unlist(nm)
-#   pos <- match(table_name, nm)
-#
-#   table_schema <- schema[["tables"]][[pos]]
-#   #attr(table_schema, "schema_type") <- "table_schema"
-#
-#   return(table_schema)
-# }
+pbi_row_push_few <- function(
+  dt,
+  group_id,
+  dataset_id,
+  table_name
+) {
+
+  rows <- list(rows = dt)
+
+  token <- .pbi_env$token$credentials$access_token
+  stale_token <- lubridate::as_datetime(as.numeric(.pbi_env$token$credentials$expires_on)) <= Sys.time()
+  if(stale_token) .pbi_env$token$refresh()
+
+  url <- paste0("https://api.powerbi.com/v1.0/myorg/groups/", group_id, "/datasets/", dataset_id, "/tables/", table_name, "/rows")
+
+  r <- httr::POST(
+    url =  utils::URLencode(url),
+    httr::add_headers(
+      Authorization = paste("Bearer", token)
+    ),
+    body = rows,
+    encode = 'json'
+  )
+
+  print(httr::status_code(r))
+  if(!httr::status_code(r)==200) print(httr::content(r))
+
+  return(r)
+}
+
 
