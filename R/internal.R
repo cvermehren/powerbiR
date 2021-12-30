@@ -1,8 +1,10 @@
-#' @title Get Power BI data type
+#' Get Power BI data type
 #'
-#' @description This function detects an R vector's class and converts it into the equivalent data type in Power BI.
+#' This function detects an R vector's class and converts it into the equivalent
+#' data type in Power BI.
 #'
-#' @param vector An atomic vector of type POSIXt, Date, Factor, Logical, Double, Integer, Numeric or Character.
+#' @param vector An atomic vector of type POSIXt, Date, Factor, Logical, Double,
+#'   Integer, Numeric or Character.
 #'
 #' @return A string indicating the Power BI data type of the vector.
 #' @export
@@ -23,18 +25,21 @@ pbi_schema_types_infer <- function(vector) {
   }
 
 
-
 #' Set Power BI column properties
 #'
 #' This function defines the Power BI column properties of a data frame.
 #'
 #' @param dt A data frame.
 #' @param table_name The name given to the data frame. Default is 'table1'.
-#' @param date_format How the datetime columns should be formatted. Default is 'yyyy-mm-dd'.
-#' @param integer_format How the integer columns should be formatted. Default is '#,###0'.
-#' @param double_format How the double columns should be formatted. Default is '#,###.00'.
+#' @param date_format How the datetime columns should be formatted. Default is
+#'   'yyyy-mm-dd'.
+#' @param integer_format How the integer columns should be formatted. Default is
+#'   '#,###0'.
+#' @param double_format How the double columns should be formatted. Default is
+#'   '#,###.00'.
 #'
-#' @return A nested data.table indicating the name of the table and the column formats.
+#' @return A nested data.table indicating the name of the table and the column
+#'   formats.
 #' @export
 #'
 
@@ -77,4 +82,83 @@ pbi_schema_column_prop <- function(
 
 }
 
-#test <- pbi_schema_column_prop(iris)
+
+#' Set Power BI table properties
+#'
+#' This function defines the Power BI table properties of a data frame.
+#'
+#' @param dt A data frame.
+#' @param date_format The Power BI format of date columns. Default is 'yyyy-mm-dd'.
+#' @param integer_format The Power BI format of integer columns. Default is '#,###0'.
+#' @param double_format The Power BI format of double columns. Default is '#,###.00'.
+#'
+#' @return A nested data.table.
+#' @export
+#'
+#' @examples pbi_schema_table_prop(iris)
+pbi_schema_table_prop <- function(
+  dt,
+  date_format = "yyyy-mm-dd",
+  integer_format = "#,###0",
+  double_format = "#,###.00"
+) {
+
+  schema <- pbi_schema_column_prop(
+    dt,
+    date_format = date_format,
+    integer_format = integer_format,
+    double_format = double_format
+  )
+
+  return(schema)
+
+}
+
+
+# Internal api calls ------------------------------------------------------
+
+# pbi_row_push_few <- function(
+#   dt,
+#   group_id,
+#   dataset_id,
+#   table_name
+# ) {
+#
+#   rows <- list(rows = dt)
+#
+#   token <- .pbi_env$token$credentials$access_token
+#   stale_token <- lubridate::as_datetime(as.numeric(.pbi_env$token$credentials$expires_on)) <= Sys.time()
+#   if(stale_token) .pbi_env$token$refresh()
+#
+#   url <- paste0("https://api.powerbi.com/v1.0/myorg/groups/", group_id, "/datasets/", dataset_id, "/tables/", table_name, "/rows")
+#
+#   r <- httr::POST(
+#     url = URLencode(url),
+#     httr::add_headers(
+#       Authorization = paste("Bearer", token)
+#     ),
+#     body = rows,
+#     encode = 'json'
+#   )
+#
+#   print(httr::status_code(r))
+#   if(!httr::status_code(r)==200) print(httr::content(r))
+#
+#   return(r)
+# }
+#
+# pbi_schema_table_get <- function(schema, table_name = NULL) {
+#
+#   tables <- schema[["tables"]]
+#
+#   nm <- list()
+#   for (i in seq_along(tables)) { nm[[i]] <- schema[["tables"]][[i]][["name"]] }
+#   nm <- unlist(nm)
+#   pos <- match(table_name, nm)
+#
+#   table_schema <- schema[["tables"]][[pos]]
+#   #attr(table_schema, "schema_type") <- "table_schema"
+#
+#   return(table_schema)
+# }
+

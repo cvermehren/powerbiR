@@ -17,14 +17,18 @@ pbi_schema_column_prop(
 
 \item{table_name}{The name given to the data frame. Default is 'table1'.}
 
-\item{date_format}{How the datetime columns should be formatted. Default is 'yyyy-mm-dd'.}
+\item{date_format}{How the datetime columns should be formatted. Default is
+'yyyy-mm-dd'.}
 
-\item{integer_format}{How the integer columns should be formatted. Default is '#,###0'.}
+\item{integer_format}{How the integer columns should be formatted. Default is
+'#,###0'.}
 
-\item{double_format}{How the double columns should be formatted. Default is '#,###.00'.}
+\item{double_format}{How the double columns should be formatted. Default is
+'#,###.00'.}
 }
 \value{
-A nested data.table indicating the name of the table and the column formats.
+A nested data.table indicating the name of the table and the column
+  formats.
 }
 \description{
 This function defines the Power BI column properties of a data frame.

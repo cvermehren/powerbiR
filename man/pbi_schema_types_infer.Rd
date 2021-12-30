@@ -7,13 +7,15 @@
 pbi_schema_types_infer(vector)
 }
 \arguments{
-\item{vector}{An atomic vector of type POSIXt, Date, Factor, Logical, Double, Integer, Numeric or Character.}
+\item{vector}{An atomic vector of type POSIXt, Date, Factor, Logical, Double,
+Integer, Numeric or Character.}
 }
 \value{
 A string indicating the Power BI data type of the vector.
 }
 \description{
-This function detects an R vector's class and converts it into the equivalent data type in Power BI.
+This function detects an R vector's class and converts it into the equivalent
+data type in Power BI.
 }
 \examples{
 sapply(iris, pbi_schema_types_infer)
