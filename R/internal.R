@@ -97,13 +97,11 @@ pbi_row_push_few <- function(
 
   rows <- list(rows = dt)
 
-  token <- .pbi_env$token$credentials$access_token
-  stale_token <- lubridate::as_datetime(as.numeric(.pbi_env$token$credentials$expires_on)) <= Sys.time()
-  if(stale_token) .pbi_env$token$refresh()
+  token <- pbi_get_token()
 
   url <- paste0("https://api.powerbi.com/v1.0/myorg/groups/", group_id, "/datasets/", dataset_id, "/tables/", table_name, "/rows")
 
-  r <- httr::POST(
+  resp <- httr::POST(
     url =  utils::URLencode(url),
     httr::add_headers(
       Authorization = paste("Bearer", token)
@@ -112,10 +110,10 @@ pbi_row_push_few <- function(
     encode = 'json'
   )
 
-  print(httr::status_code(r))
-  if(!httr::status_code(r)==200) print(httr::content(r))
+  httr::message_for_status(resp)
+  if(!httr::status_code(resp)==200) print(httr::content(resp))
 
-  return(r)
+  return(resp)
 }
 
 
