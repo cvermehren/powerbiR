@@ -21,20 +21,27 @@ pbi_list_groups <- function() {
 }
 
 
-# pbi_list_datasets <- function(group_id) {
-#
-#   token <- .pbi_env$token$credentials$access_token
-#   stale_token <- lubridate::as_datetime(as.numeric(.pbi_env$token$credentials$expires_on)) <= Sys.time()
-#   if(stale_token) .pbi_env$token$refresh()
-#
-#   url <- paste0('https://api.powerbi.com/v1.0/myorg/groups/', group_id ,'/datasets' )
-#   datasets <- httr::GET(url, httr::add_headers(Authorization = paste("Bearer", token)))
-#   datasets <- httr::content(datasets)
-#   datasets <- rbindlist(datasets$value)
-#
-#   datasets[, group_id := group_id]
-#
-#   data.table(datasets)
-#
-#
-# }
+#' Title
+#'
+#' @param group_id The group id
+#'
+#' @return A table
+#' @export
+pbi_list_datasets <- function(group_id) {
+
+  token <- pbi_get_token()
+
+  url <- paste0('https://api.powerbi.com/v1.0/myorg/groups/', group_id ,'/datasets' )
+  resp <- httr::GET(url, httr::add_headers(Authorization = paste("Bearer", token)))
+
+  httr::stop_for_status(resp)
+
+  resp <- httr::content(resp)
+  resp <- suppressWarnings( rbindlist(resp$value))
+
+  resp[, group_id := group_id]
+
+  data.table(resp)
+
+
+}

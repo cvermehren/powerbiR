@@ -58,7 +58,7 @@ pbi_get_token <- function() {
 
   if(length(.pbi_env$token$credentials$expires_on) == 0){
 
-    stop("You must authenticate using pbi_auth()")
+    stop("Couldn't find credentials. Please authenticate using pbi_auth()")
   }
   expires_on <- as.numeric(.pbi_env$token$credentials$expires_on)
   stale_token <- lubridate::as_datetime(expires_on) <= Sys.time()
