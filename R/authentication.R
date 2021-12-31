@@ -44,11 +44,22 @@ pbi_auth <- function(tenant = Sys.getenv("PBI_TENANT"),
 
   .pbi_env$token <- AzureAuth::get_azure_token(
     resource = "https://analysis.windows.net/powerbi/api",
-    tenant = Sys.getenv("PBI_TENANT"),
-    app = Sys.getenv("PBI_APP"),
-    password = Sys.getenv("PBI_PW"),
+    tenant = tenant,
+    app = app,
+    password = password,
     auth_type = "client_credentials",
     use_cache = F
   )
+}
+
+
+pbi_auth_refresh <- function() {
+
+  expires_on <- as.numeric(.pbi_env$token$credentials$expires_on)
+  stale_token <- lubridate::as_datetime(expires_on) <= Sys.time()
+
+  if (stale_token) .pbi_env$token$refresh()
+
+  return(.pbi_env$token$credentials$access_token)
 }
 
