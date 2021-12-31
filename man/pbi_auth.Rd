@@ -13,28 +13,31 @@ pbi_auth(
 \arguments{
 \item{tenant}{Your Microsoft tenant ID}
 
-\item{app}{Your Microsoft App ID}
+\item{app}{Your Microsoft app ID}
 
-\item{password}{Your Microsoft App password}
+\item{password}{Your Microsoft app password (client secret)}
 }
 \value{
 Invisibly, the token that has been saved to the session.
 }
 \description{
-Run this function at start to obtain an authentication token. The
-token will be saved to your session and refreshed automatically upon
-expiration.
+Run this function at start to obtain an authentication token and save it to
+the session.
 }
 \details{
-A wrapper for AzureAuth::get_azure_token(). Currently, only
+To auto-authenticate, you can specify credentials in environment variables
+via an \env{.Renviron} file or using \code{\link{Sys.setenv}} (see example below).
+
+This function is a wrapper for AzureAuth::get_azure_token(). Currently, only
 non-interactive authentication is supported. You need to register an Azure
 Active Directory service-principal application and obtain tenant ID, app ID
 and app password (client secret).
 
-Please notice that for reasons of CRAN policy, the first time AzureAuth is
-loaded, it will prompt you for permission to create a user-specific directory
-in order to cache the token. The prompt only appears in an interactive
-session, not in a batch script.
+For reasons of CRAN policy, the first time AzureAuth is loaded, it will
+prompt you for permission to create a user-specific directory in order to
+cache the token. The prompt only appears in an interactive session, not in a
+batch script. For more details, see
+\href{https://github.com/cloudyr/AzureAuth}{AzureAuth}.
 }
 \examples{
 
