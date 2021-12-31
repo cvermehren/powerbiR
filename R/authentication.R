@@ -53,12 +53,15 @@ pbi_auth <- function(tenant = Sys.getenv("PBI_TENANT"),
 }
 
 
-pbi_auth_refresh <- function() {
+pbi_get_token <- function() {
 
   expires_on <- as.numeric(.pbi_env$token$credentials$expires_on)
   stale_token <- lubridate::as_datetime(expires_on) <= Sys.time()
 
-  if (stale_token) .pbi_env$token$refresh()
+  if (stale_token) {
+    futile.logger::flog.info("Refreshing stale token...")
+    .pbi_env$token$refresh()
+  }
 
   return(.pbi_env$token$credentials$access_token)
 }
