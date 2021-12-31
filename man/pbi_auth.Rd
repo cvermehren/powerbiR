@@ -18,10 +18,34 @@ pbi_auth(
 \item{password}{Your Microsoft App password}
 }
 \value{
-An active token
+Invisibly, the token that has been saved to the session.
 }
 \description{
-Supply your application name, client ID and client secret. You will need to
-register an application here:
-https://powerbi.microsoft.com/en-us/documentation/powerbi-developer-register-a-web-app/
+Run this function at start to obtain an authentication token. The
+token will be saved to your session and refreshed automatically upon
+expiration.
+}
+\details{
+A wrapper for AzureAuth::get_azure_token(). Currently, only
+non-interactive authentication is supported. You need to register an Azure
+Active Directory service-principal application and obtain tenant ID, app ID
+and app password (client secret).
+
+Please notice that for reasons of CRAN policy, the first time AzureAuth is
+loaded, it will prompt you for permission to create a user-specific directory
+in order to cache the token. The prompt only appears in an interactive
+session, not in a batch script.
+}
+\examples{
+
+\dontrun{
+# Set token in environment
+Sys.setenv(
+  PBI_TENANT = "my_tenant_id",
+  PBI_APP = "my_app_id",
+  PBI_PW = "my_app_client_secret"
+  )
+
+  pbi_auth()
+}
 }
