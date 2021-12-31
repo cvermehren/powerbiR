@@ -1,7 +1,17 @@
-#' List Power BI groups (workspaces)
+#' Get Power BI workspaces
 #'
-#' @return A data.table with Power BI group ids and meta data.
+#' Returns the ids and meta data of all Power BI workspaces to which the service
+#' principal app has been granted access.
+#'
+#' @return A data.table / data frame.
 #' @export
+#'
+#' @examples
+#'
+#' \dontrun{
+#'
+#' pbi_list_groups()
+#' }
 pbi_list_groups <- function() {
 
   token <- pbi_get_token()
@@ -21,12 +31,22 @@ pbi_list_groups <- function() {
 }
 
 
-#' Title
+#' Get datasets in workspace
 #'
-#' @param group_id The group id
+#' Returns the ids and meta data of all available datasets in a specific
+#' Power BI workspace.
 #'
-#' @return A table
+#' @param group_id The Power BI workspace id
+#'
+#' @return A data.table / data frame.
 #' @export
+#'
+#' @examples
+#'
+#' \dontrun{
+#'
+#' pbi_list_datasets(my_group_id)
+#' }
 pbi_list_datasets <- function(group_id) {
 
   token <- pbi_get_token()

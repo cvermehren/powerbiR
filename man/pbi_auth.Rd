@@ -18,20 +18,22 @@ pbi_auth(
 \item{password}{Your Microsoft app password (client secret)}
 }
 \value{
-Invisibly, the token that has been saved to the session.
+Returns a token invisibly.
 }
 \description{
-Run this function at start to obtain an authentication token and save it to
-the session.
+Run this function at start to authenticate your session. An authentication
+token is returned invisibly and used by other functions while requesting the
+Power BI API. The token is automatically refreshed upon expiration.
 }
 \details{
 To auto-authenticate, you can specify credentials in environment variables
-via an \env{.Renviron} file or using \code{\link{Sys.setenv}} (see example below).
+via an \env{.Renviron} file or using \code{\link{Sys.setenv}} (see example
+below).
 
-This function is a wrapper for AzureAuth::get_azure_token(). Currently, only
-non-interactive authentication is supported. You need to register an Azure
-Active Directory service-principal application and obtain tenant ID, app ID
-and app password (client secret).
+pbi_auth() is a wrapper for AzureAuth::get_azure_token(). Currently, only
+non-interactive authentication is supported. You therefore need to register
+an Azure Active Directory service-principal application and obtain tenant ID,
+app ID and app password (client secret).
 
 For reasons of CRAN policy, the first time AzureAuth is loaded, it will
 prompt you for permission to create a user-specific directory in order to

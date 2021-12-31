@@ -2,16 +2,24 @@
 % Please edit documentation in R/list.R
 \name{pbi_list_datasets}
 \alias{pbi_list_datasets}
-\title{Title}
+\title{Get datasets in workspace}
 \usage{
 pbi_list_datasets(group_id)
 }
 \arguments{
-\item{group_id}{The group id}
+\item{group_id}{The Power BI workspace id}
 }
 \value{
-A table
+A data.table / data frame.
 }
 \description{
-Title
+Returns the ids and meta data of all available datasets in a specific
+Power BI workspace.
+}
+\examples{
+
+\dontrun{
+
+pbi_list_datasets(my_group_id)
+}
 }

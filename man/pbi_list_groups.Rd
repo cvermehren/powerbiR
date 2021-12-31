@@ -2,13 +2,21 @@
 % Please edit documentation in R/list.R
 \name{pbi_list_groups}
 \alias{pbi_list_groups}
-\title{List Power BI groups (workspaces)}
+\title{Get Power BI workspaces}
 \usage{
 pbi_list_groups()
 }
 \value{
-A data.table with Power BI group ids and meta data.
+A data.table / data frame.
 }
 \description{
-List Power BI groups (workspaces)
+Returns the ids and meta data of all Power BI workspaces to which the service
+principal app has been granted access.
+}
+\examples{
+
+\dontrun{
+
+pbi_list_groups()
+}
 }
