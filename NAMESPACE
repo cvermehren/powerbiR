@@ -3,6 +3,7 @@
 export(pbi_auth)
 export(pbi_list_datasets)
 export(pbi_list_groups)
+export(pbi_push_dataset)
 export(pbi_schema_add_relations)
 export(pbi_schema_create)
 import(data.table)
