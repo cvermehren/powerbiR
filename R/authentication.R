@@ -1,4 +1,7 @@
 .pbi_env <- new.env(parent = emptyenv())
+.pbi_env$token$credentials <- NULL
+
+#.pbi_env$token <- NULL
 
 #' Authenticate your Power BI API session
 #'
@@ -43,28 +46,35 @@
 pbi_auth <- function(tenant = Sys.getenv("PBI_TENANT"),
                      app = Sys.getenv("PBI_APP"),
                      password = Sys.getenv("PBI_PW")) {
-
-  .pbi_env$token <- AzureAuth::get_azure_token(
+  .pbi_env$token <- try(AzureAuth::get_azure_token(
     resource = "https://analysis.windows.net/powerbi/api",
     tenant = tenant,
     app = app,
     password = password,
     auth_type = "client_credentials",
     use_cache = F
-  )
+  ))
+
+  if (inherits(.pbi_env$token, "try-error")) {
+    stop("Please save your Azure tenant ID, App ID and client secret in an environment variable.\nSee ?pbi_auth() for details.")
+    }
 }
 
 
 pbi_get_token <- function() {
 
 
-  if(length(.pbi_env$token$credentials$expires_on) == 0){
+  if(length(.pbi_env$token$credentials$expires_on) == 0) {
 
-    stop("Couldn't find credentials. Please authenticate using pbi_auth()")
+    res <- try(pbi_auth(), silent = TRUE)
+
+    if(inherits(res, "try-error")) {
+      stop("Couldn't find credentials. Please authenticate using pbi_auth()")
+    }
   }
+
   expires_on <- as.numeric(.pbi_env$token$credentials$expires_on)
   stale_token <- lubridate::as_datetime(expires_on) <= Sys.time()
-
 
   if (stale_token) {
     futile.logger::flog.info("Refreshing stale token...")
