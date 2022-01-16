@@ -45,3 +45,29 @@ pbi_push_dataset <- function(schema,
   return(r)
 
 }
+
+
+#' Title
+#'
+#' My description
+#'
+#' @param dt A data.table
+#' @param group_id The grp id, workspace
+#' @param dataset_id The dataset
+#' @param table_name The name of the table
+#'
+#' @return A dataset with tables and optionally defined relationships will be
+#'   created in the specified Power BI workspace
+#' @export
+#'
+#' @examples
+#'
+#' \dontrun{
+#'
+#' pbi_push_rows(my_data, my_group_id)
+#' }
+pbi_push_rows <- function(dt, group_id, dataset_id, table_name) {
+
+  push_list <- split(dt, (as.numeric(rownames(dt))-1) %/% 10000)
+  lapply(push_list, pbi_row_push_few, group_id = group_id, dataset_id = dataset_id, table_name = table_name)
+}

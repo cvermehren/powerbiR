@@ -53,6 +53,47 @@ pbi_schema_create <- function(
   return(dt_list)
 }
 
+
+#' Title
+#'
+#' My description
+#'
+#' @param from_table The from table
+#' @param from_column The from column
+#' @param to_table The to table
+#' @param to_column The to columns
+#' @param direction The crossfiltering direction
+#' @param name The name
+#'
+#' @return A data.table
+#' @export
+#'
+#' @examples
+#' # An example
+pbi_schema_relation_create <- function(from_table = NULL,
+                                       from_column = NULL,
+                                       to_table = NULL,
+                                       to_column = from_column,
+                                       direction = c("OneDirection", "BothDirections", "Automatic"),
+                                       name = paste0(from_table, to_table, from_column)) {
+
+  if(is.null(from_table)) stop("Please specify the table from which the relationship starts (from_table)")
+  if(is.null(from_column)) stop("Please specify the joining key column in the 'from_table'")
+  if(is.null(to_table)) stop("Please specify the table at which the relationship ends (to_table)")
+
+  direction <- match.arg(direction)
+
+  data.table(
+    name,
+    fromTable = from_table,
+    fromColumn = from_column,
+    toTable = to_table,
+    toColumn = to_column,
+    crossFilteringBehavior = direction
+  )
+}
+
+
 #' Define Power BI table relations
 #'
 #' @param schema A schema object from pbi_schema_create()
