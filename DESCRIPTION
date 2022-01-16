@@ -14,10 +14,8 @@ Imports:
     data.table,
     jsonlite,
     httr,
-    lubridate,
     utils,
-    AzureAuth,
-    futile.logger
+    AzureAuth
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
