@@ -3,12 +3,13 @@ pbi_schema_types_infer <- function(vector) {
 
   if( !is.atomic(vector) ) stop('The argument must be an atomic vector')
 
-  if (methods::is(vector, "Date")) return("DateTime")
-  else if (methods::is(vector, "POSIXt")) return("DateTime")
-  else if (is.factor(vector)) return("String")
-  else if (is.logical(vector)) return("Boolean")
-  else if (is.double(vector)) return("Double")
-  else if (is.integer(vector)) return("Int64")
+  if (inherits(vector, "Date")) return("DateTime")
+  else if (inherits(vector, "POSIXt")) return("DateTime")
+  else if (inherits(vector, "POSIXct")) return("DateTime")
+  else if (inherits(vector, "factor")) return("String")
+  else if (inherits(vector, "logical")) return("Boolean")
+  else if (inherits(vector, "numeric")) return("Double")
+  else if (inherits(vector, "integer")) return("Int64")
   else return("String")
 }
 
