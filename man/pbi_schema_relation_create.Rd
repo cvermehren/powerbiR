@@ -2,7 +2,7 @@
 % Please edit documentation in R/schema.R
 \name{pbi_schema_relation_create}
 \alias{pbi_schema_relation_create}
-\title{Title}
+\title{Power BI table relationship}
 \usage{
 pbi_schema_relation_create(
   from_table = NULL,
@@ -14,23 +14,26 @@ pbi_schema_relation_create(
 )
 }
 \arguments{
-\item{from_table}{The from table}
+\item{from_table}{The name of the foreign key table}
 
-\item{from_column}{The from column}
+\item{from_column}{The name of the foreign key column}
 
-\item{to_table}{The to table}
+\item{to_table}{The name of the primary key table}
 
-\item{to_column}{The to columns}
+\item{to_column}{The name of the primary key column. Defaults to from_column}
 
-\item{direction}{The crossfiltering direction}
+\item{direction}{The filter direction of the relationship. Defaults to
+'OneDirection'}
 
-\item{name}{The name}
+\item{name}{The relationship name and identifier. Defaults to a concatenation
+of from_table, to_table and from_column}
 }
 \value{
 A data.table
 }
 \description{
-My description
+Defines a relationship between tables in a Power BI push dataset. To add this
+definition to a Power BI dataset schema, use pbi_schema_add_relations().
 }
 \examples{
 # An example

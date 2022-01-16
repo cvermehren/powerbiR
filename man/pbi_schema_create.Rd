@@ -2,7 +2,7 @@
 % Please edit documentation in R/schema.R
 \name{pbi_schema_create}
 \alias{pbi_schema_create}
-\title{Create schema}
+\title{Power BI dataset schema}
 \usage{
 pbi_schema_create(
   dt_list,
@@ -37,7 +37,7 @@ frames.}
 A list with schema properties.
 }
 \description{
-Create schema
+Creates a Power BI push dataset schema
 }
 \examples{
 pbi_schema_create(

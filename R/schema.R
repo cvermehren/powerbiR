@@ -1,4 +1,6 @@
-#' Create schema
+#' Power BI dataset schema
+#'
+#' Creates a Power BI push dataset schema
 #'
 #' @param dt_list A list of data frames
 #' @param dataset_name The name of the Power BI dataset.
@@ -54,16 +56,19 @@ pbi_schema_create <- function(
 }
 
 
-#' Title
+#' Power BI table relationship
 #'
-#' My description
+#' Defines a relationship between tables in a Power BI push dataset. To add this
+#' definition to a Power BI dataset schema, use pbi_schema_add_relations().
 #'
-#' @param from_table The from table
-#' @param from_column The from column
-#' @param to_table The to table
-#' @param to_column The to columns
-#' @param direction The crossfiltering direction
-#' @param name The name
+#' @param from_table The name of the foreign key table
+#' @param from_column The name of the foreign key column
+#' @param to_table The name of the primary key table
+#' @param to_column The name of the primary key column. Defaults to from_column
+#' @param direction The filter direction of the relationship. Defaults to
+#'   'OneDirection'
+#' @param name The relationship name and identifier. Defaults to a concatenation
+#'   of from_table, to_table and from_column
 #'
 #' @return A data.table
 #' @export
