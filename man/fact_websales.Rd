@@ -10,7 +10,7 @@ A data frame with 10483 rows and 2 variables:
   \item{date}{customer ID, factor vector a}
   \item{market_key}{transaction date2 c}
   \item{channel_key}{transaction date2 c}
-  \item{impressions}{transaction date1 b}
+  \item{ad_impressions}{transaction date1 b}
   \item{ad_clicks}{transaction date2 c}
   \item{ad_cost}{customer ID, factor vector a}
   \item{sessions}{transaction date1 b}
