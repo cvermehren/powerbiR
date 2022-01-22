@@ -23,9 +23,16 @@ pbi_list_groups <- function() {
 
   resp <- httr::GET(url, header)
 
-  parsed <- pbi_parse_resp(resp)
+  if (httr::http_error(resp)) stop(httr::content(resp), call. = FALSE)
 
-  data.table::rbindlist(parsed$value)
+  resp <- httr::content(resp, "text", encoding = "UTF-8")
+  resp <- try(jsonlite::fromJSON(resp, simplifyVector = FALSE))
+
+  if (inherits(resp, "try-error")) {
+    stop("The Power BI API returned an empty value or the value could not be parsed.")
+  }
+
+  data.table::rbindlist(resp$value)
 
 }
 
@@ -54,11 +61,9 @@ pbi_list_datasets <- function(group_id) {
   url <- paste0('https://api.powerbi.com/v1.0/myorg/groups/', group_id ,'/datasets' )
   header <- httr::add_headers(Authorization = paste("Bearer", token))
 
-  resp <- httr::GET(url, header)
+  resp <- get_request(url = url, header = header)
 
-  parsed <- pbi_parse_resp(resp)
-
-  value <- suppressWarnings( rbindlist(parsed$value))
+  value <- suppressWarnings( rbindlist(resp$value))
   value[, group_id := group_id]
 
   data.table(value)

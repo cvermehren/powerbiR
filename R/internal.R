@@ -1,17 +1,18 @@
 
-pbi_parse_resp <- function(resp) {
+get_request <- function(url, header) {
 
-  parsed <- jsonlite::fromJSON(
-    httr::content(resp, "text", encoding = "UTF-8"),
-    simplifyVector = FALSE
-  )
+  resp <- httr::GET(url, header)
 
-  if (httr::http_error(resp)) {stop(parsed, call. = FALSE)}
+  if (httr::http_error(resp)) stop(httr::content(resp), call. = FALSE)
 
-  message("Successful request, status code: ", httr::status_code(resp))
+  resp <- httr::content(resp, "text", encoding = "UTF-8")
+  resp <- try(jsonlite::fromJSON(resp, simplifyVector = FALSE))
 
-  return(parsed)
+  if (inherits(resp, "try-error")) {
+    stop("The Power BI API returned an empty value or the value could not be parsed.")
+  }
 
+  return(resp)
 }
 
 
