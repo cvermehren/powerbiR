@@ -2,7 +2,7 @@
 % Please edit documentation in R/list.R
 \name{pbi_list_datasets}
 \alias{pbi_list_datasets}
-\title{Get a list of datasets in a Power BI workspace}
+\title{Get a list of datasets in a workspace}
 \usage{
 pbi_list_datasets(group_id)
 }

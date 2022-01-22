@@ -2,7 +2,7 @@
 % Please edit documentation in R/schema.R
 \name{pbi_schema_relation_create}
 \alias{pbi_schema_relation_create}
-\title{Power BI table relationship}
+\title{Define table relationship}
 \usage{
 pbi_schema_relation_create(
   from_table = NULL,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/list.R
 \name{pbi_list_groups}
 \alias{pbi_list_groups}
-\title{Get a list of Power BI workspaces}
+\title{Get a list of workspaces}
 \usage{
 pbi_list_groups()
 }

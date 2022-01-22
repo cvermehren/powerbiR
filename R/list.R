@@ -1,4 +1,4 @@
-#' Get a list of Power BI workspaces
+#' Get a list of workspaces
 #'
 #' Returns the ids and meta data of all Power BI workspaces to which the service
 #' principal app has been granted access.
@@ -36,7 +36,7 @@ pbi_list_groups <- function() {
 
 }
 
-#' Get a list of datasets in a Power BI workspace
+#' Get a list of datasets in a workspace
 #'
 #' Returns the IDs and meta data of all available datasets in the specified
 #' Power BI workspace.

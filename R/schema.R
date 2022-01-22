@@ -73,7 +73,7 @@ pbi_schema_create <- function(
 }
 
 
-#' Power BI table relationship
+#' Define table relationship
 #'
 #' Defines a relationship between tables in a Power BI push dataset. To add this
 #' definition to a Power BI dataset schema, use pbi_schema_add_relations().
