@@ -1,3 +1,20 @@
+
+pbi_parse_resp <- function(resp) {
+
+  parsed <- jsonlite::fromJSON(
+    httr::content(resp, "text", encoding = "UTF-8"),
+    simplifyVector = FALSE
+  )
+
+  if (httr::http_error(resp)) {stop(parsed, call. = FALSE)}
+
+  message("Successful request, status code: ", httr::status_code(resp))
+
+  return(parsed)
+
+}
+
+
 # Infer Power BI data types from a data frame. Used in pbi_schema_column_prop().
 pbi_schema_types_infer <- function(vector) {
 
@@ -89,32 +106,31 @@ pbi_schema_table_get <- function(schema, table_name = NULL) {
 
 # Internal api calls ------------------------------------------------------
 
-pbi_row_push_few <- function(
-  dt,
-  group_id,
-  dataset_id,
-  table_name
-) {
 
-  rows <- list(rows = dt)
+
+
+pbi_row_push_few <- function(dt,
+                             group_id,
+                             dataset_id,
+                             table_name) {
 
   token <- pbi_get_token()
 
   url <- paste0("https://api.powerbi.com/v1.0/myorg/groups/", group_id, "/datasets/", dataset_id, "/tables/", table_name, "/rows")
+  url <- utils::URLencode(url)
 
-  resp <- httr::POST(
-    url =  utils::URLencode(url),
-    httr::add_headers(
-      Authorization = paste("Bearer", token)
-    ),
-    body = rows,
-    encode = 'json'
-  )
+  header <- httr::add_headers(Authorization = paste("Bearer", token))
 
-  httr::message_for_status(resp)
-  if(!httr::status_code(resp)==200) print(httr::content(resp))
+  rows <- list(rows = dt)
 
-  return(resp)
+  resp <- httr::POST(url, header, body = rows, encode = 'json')
+
+  if (httr::http_error(resp)) {stop(resp, call. = FALSE)}
+
+  message("Successful push, status code: ", httr::status_code(resp))
+
+
+
 }
 
 

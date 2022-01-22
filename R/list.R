@@ -21,14 +21,12 @@ pbi_list_groups <- function() {
 
   resp <- httr::GET(url, header)
 
-  httr::stop_for_status(resp)
+  parsed <- pbi_parse_resp(resp)
 
-  resp <- httr::content(resp)
-  groups <- data.table::rbindlist(resp$value)
-
-  return(groups)
+  data.table::rbindlist(parsed$value)
 
 }
+
 
 
 #' Get datasets in workspace
@@ -52,16 +50,16 @@ pbi_list_datasets <- function(group_id) {
   token <- pbi_get_token()
 
   url <- paste0('https://api.powerbi.com/v1.0/myorg/groups/', group_id ,'/datasets' )
-  resp <- httr::GET(url, httr::add_headers(Authorization = paste("Bearer", token)))
+  header <- httr::add_headers(Authorization = paste("Bearer", token))
 
-  httr::stop_for_status(resp)
+  resp <- httr::GET(url, header)
 
-  resp <- httr::content(resp)
-  resp <- suppressWarnings( rbindlist(resp$value))
+  parsed <- pbi_parse_resp(resp)
 
-  resp[, group_id := group_id]
+  value <- suppressWarnings( rbindlist(parsed$value))
+  value[, group_id := group_id]
 
-  data.table(resp)
-
+  data.table(value)
 
 }
+

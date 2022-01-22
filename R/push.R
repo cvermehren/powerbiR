@@ -20,29 +20,21 @@ pbi_push_dataset <- function(schema,
                              group_id,
                              retention = c("none", "basicFIFO")) {
 
+  retention <- match.arg(retention)
+
   token <- pbi_get_token()
 
   url <- paste0("https://api.powerbi.com/v1.0/myorg/groups/", group_id,"/datasets")
+  if(retention == "basicFIFO") {url <- paste0(url, "?defaultRetentionPolicy=basicFIFO")}
+  url <- utils::URLencode(url)
 
-  #retention <- match.arg(retention)
-  retention <- "none"
+  header <- httr::add_headers(Authorization = paste("Bearer", token))
 
-  if(retention == "basicFIFO") {
-    url <- paste0(url, "?defaultRetentionPolicy=basicFIFO")
-    }
+  resp <- httr::POST(url, header, body = schema, encode = "json")
 
-  r <- httr::POST(
-    url = utils::URLencode(url),
-    httr::add_headers(
-      Authorization = paste("Bearer", token)
-    ),
-    body = schema,
-    encode = "json"
-  )
+  if (httr::http_error(resp)) {stop(resp, call. = FALSE)}
 
-  print(httr::status_code(r))
-  if(!httr::status_code(r)==200) print(httr::content(r))
-  return(r)
+  message("Successful push, status code: ", httr::status_code(resp))
 
 }
 
@@ -69,5 +61,16 @@ pbi_push_dataset <- function(schema,
 pbi_push_rows <- function(dt, group_id, dataset_id, table_name) {
 
   push_list <- split(dt, (as.numeric(rownames(dt))-1) %/% 10000)
-  lapply(push_list, pbi_row_push_few, group_id = group_id, dataset_id = dataset_id, table_name = table_name)
+
+  return(invisible(
+    lapply(
+      push_list,
+      pbi_row_push_few,
+      group_id = group_id,
+      dataset_id = dataset_id,
+      table_name = table_name
+      )
+    )
+  )
+
 }
