@@ -2,18 +2,18 @@
 % Please edit documentation in R/list.R
 \name{pbi_list_datasets}
 \alias{pbi_list_datasets}
-\title{Get datasets in workspace}
+\title{Get a list of datasets in a Power BI workspace}
 \usage{
 pbi_list_datasets(group_id)
 }
 \arguments{
-\item{group_id}{The Power BI workspace id}
+\item{group_id}{The Power BI workspace ID.}
 }
 \value{
-A data.table / data frame.
+A data.table / data frame with dataset information.
 }
 \description{
-Returns the ids and meta data of all available datasets in a specific
+Returns the IDs and meta data of all available datasets in the specified
 Power BI workspace.
 }
 \details{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/push.R
 \name{pbi_push_rows}
 \alias{pbi_push_rows}
-\title{Push Rows}
+\title{Push rows to a dataset table}
 \usage{
 pbi_push_rows(dt, group_id, dataset_id, table_name, overwrite = FALSE)
 }
@@ -21,10 +21,10 @@ rows. If FALSE, the new rows will be appended to the existing rows.}
 }
 \value{
 A dataset with tables and optionally defined relationships will be
-  created in the specified Power BI workspace
+  created in the specified Power BI workspace.
 }
 \description{
-Adds new data rows to the specified table within the specified push dataset
+Adds new data rows to the specified table within the specified dataset
 from the specified Power BI workspace. Only applicable to push datasets.
 }
 \details{

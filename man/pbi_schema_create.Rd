@@ -2,12 +2,13 @@
 % Please edit documentation in R/schema.R
 \name{pbi_schema_create}
 \alias{pbi_schema_create}
-\title{Power BI dataset schema}
+\title{Create a Power BI dataset schema}
 \usage{
 pbi_schema_create(
   dt_list,
   dataset_name = "My Power BI Dataset",
   table_name_list,
+  relations_list = NULL,
   date_format = "yyyy-mm-dd",
   integer_format = "#,###0",
   double_format = "#,###.00",
@@ -15,29 +16,34 @@ pbi_schema_create(
 )
 }
 \arguments{
-\item{dt_list}{A list of data frames}
+\item{dt_list}{A list of data frames which the schema should be inferred from.}
 
-\item{dataset_name}{The name of the Power BI dataset.}
+\item{dataset_name}{A custom name of the Power BI dataset.}
 
-\item{table_name_list}{A list of names corresponding to the list of data
+\item{table_name_list}{A list of custom names corresponding to the list of data
 frames.}
 
-\item{date_format}{The format of the date columns (if any). Default is
+\item{relations_list}{A list of relation definitions returned by
+pbi_schema_relation_create()}
+
+\item{date_format}{The format of date columns (if any). Default is
 'yyyy-mm-dd'.}
 
-\item{integer_format}{The format of the integer columns (if any). Default is
+\item{integer_format}{The format of integer columns (if any). Default is
 '#,###0'.}
 
-\item{double_format}{The format of the double columns (if any). Default is
+\item{double_format}{The format of double columns (if any). Default is
 '#,###.00'.}
 
-\item{default_mode}{The dataset mode or type.}
+\item{default_mode}{The dataset mode or type. Defaults to 'Push'.}
 }
 \value{
 A list with schema properties.
 }
 \description{
-Creates a Power BI push dataset schema
+Creates a Power BI dataset schema from a set of data frames. Columns and data
+types will be inferred from the data frames.  Only applicable to push
+datasets.
 }
 \examples{
 pbi_schema_create(

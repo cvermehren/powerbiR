@@ -3,7 +3,7 @@
 \docType{data}
 \name{fact_websales}
 \alias{fact_websales}
-\title{Fact Web Sales.}
+\title{Demo data: Fact Web Sales.}
 \format{
 A data frame with 10483 rows and 2 variables:
 \describe{

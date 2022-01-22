@@ -2,7 +2,7 @@
 % Please edit documentation in R/authentication.R
 \name{pbi_auth}
 \alias{pbi_auth}
-\title{Authenticate your Power BI API session}
+\title{Authenticate your session}
 \usage{
 pbi_auth(
   tenant = Sys.getenv("PBI_TENANT"),
@@ -11,19 +11,20 @@ pbi_auth(
 )
 }
 \arguments{
-\item{tenant}{Your Microsoft tenant ID}
+\item{tenant}{Your Microsoft tenant ID.}
 
-\item{app}{Your Microsoft app ID}
+\item{app}{Your Microsoft app ID.}
 
-\item{password}{Your Microsoft app password (client secret)}
+\item{password}{Your Microsoft app password (client secret).}
 }
 \value{
 Returns a token invisibly.
 }
 \description{
-Run this function at start to authenticate your session. An authentication
-token is returned invisibly and used by other functions while requesting the
-Power BI API. The token is automatically refreshed upon expiration.
+Run this function at start to authenticate your Power BI session. An
+authentication token is returned invisibly and used by other functions while
+requesting the Power BI API. The token is automatically refreshed upon
+expiration.
 }
 \details{
 To auto-authenticate, you can specify credentials in environment variables

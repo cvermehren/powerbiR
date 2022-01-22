@@ -2,12 +2,12 @@
 % Please edit documentation in R/list.R
 \name{pbi_list_groups}
 \alias{pbi_list_groups}
-\title{Get Power BI workspaces}
+\title{Get a list of Power BI workspaces}
 \usage{
 pbi_list_groups()
 }
 \value{
-A data.table / data frame.
+A data.table / data frame with workspaces.
 }
 \description{
 Returns the ids and meta data of all Power BI workspaces to which the service

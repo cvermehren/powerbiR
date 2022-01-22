@@ -70,12 +70,10 @@ pbi_schema_column_prop <- function(
 
 }
 
-pbi_schema_table_prop <- function(
-  dt,
-  date_format = "yyyy-mm-dd",
-  integer_format = "#,###0",
-  double_format = "#,###.00"
-) {
+pbi_schema_table_prop <- function(dt,
+                                  date_format = "yyyy-mm-dd",
+                                  integer_format = "#,###0",
+                                  double_format = "#,###.00") {
 
   schema <- pbi_schema_column_prop(
     dt,
@@ -99,15 +97,28 @@ pbi_schema_table_get <- function(schema, table_name = NULL) {
   pos <- match(table_name, nm)
 
   table_schema <- schema[["tables"]][[pos]]
-  #attr(table_schema, "schema_type") <- "table_schema"
 
   return(table_schema)
 }
 
 
+# Define Power BI table relations
+# schema: A schema object from pbi_schema_create()
+# rel_list: A list of relations as returned by pbi_schema_relation_create()
+
+pbi_schema_add_relations <- function(schema, rel_list) {
+
+  rel_list <- lapply(rel_list, jsonlite::unbox)
+
+  rel <- list(relationships = rel_list)
+  new_schema <- append(schema, rel)
+
+  return(new_schema)
+
+}
+
+
 # Internal api calls ------------------------------------------------------
-
-
 
 
 pbi_row_push_few <- function(dt,

@@ -1,6 +1,6 @@
-#' Push Dataset
+#' Push a dataset schema to Power BI
 #'
-#' Pushes an empty dataset to the specified Power BI workspace. To add rows to
+#' Pushes a dataset schema to the specified Power BI workspace. To add rows to
 #' the dataset, use pbi_push_rows().
 #'
 #' Required scope: Dataset.ReadWrite.All
@@ -9,8 +9,8 @@
 #' @param group_id The ID of the destination Power BI workspace.
 #' @param retention The retention policy of the dataset. Default is "none".
 #'
-#' @return A dataset with tables and optionally defined relationships will be
-#'   created in the specified Power BI workspace.
+#' @return A dataset with tables will be created in the specified Power BI
+#'   workspace.
 #' @export
 #'
 #' @examples
@@ -37,14 +37,15 @@ pbi_push_dataset <- function(schema,
 
   if (httr::http_error(resp)) {stop(httr::content(resp), call. = FALSE)}
 
-  message("Successful created empty dataset in Power BI.")
+  message("Successfully added dataset schema to the workspace with ID ",
+          group_id )
 
 }
 
 
-#' Push Rows
+#' Push rows to a dataset table
 #'
-#' Adds new data rows to the specified table within the specified push dataset
+#' Adds new data rows to the specified table within the specified dataset
 #' from the specified Power BI workspace. Only applicable to push datasets.
 #'
 #' Required scope: Dataset.ReadWrite.All
@@ -58,7 +59,7 @@ pbi_push_dataset <- function(schema,
 #'   rows. If FALSE, the new rows will be appended to the existing rows.
 #'
 #' @return A dataset with tables and optionally defined relationships will be
-#'   created in the specified Power BI workspace
+#'   created in the specified Power BI workspace.
 #' @export
 #'
 #' @examples

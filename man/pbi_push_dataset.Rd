@@ -2,7 +2,7 @@
 % Please edit documentation in R/push.R
 \name{pbi_push_dataset}
 \alias{pbi_push_dataset}
-\title{Push Dataset}
+\title{Push a dataset schema to Power BI}
 \usage{
 pbi_push_dataset(schema, group_id, retention = c("none", "basicFIFO"))
 }
@@ -14,11 +14,11 @@ pbi_push_dataset(schema, group_id, retention = c("none", "basicFIFO"))
 \item{retention}{The retention policy of the dataset. Default is "none".}
 }
 \value{
-A dataset with tables and optionally defined relationships will be
-  created in the specified Power BI workspace.
+A dataset with tables will be created in the specified Power BI
+  workspace.
 }
 \description{
-Pushes an empty dataset to the specified Power BI workspace. To add rows to
+Pushes a dataset schema to the specified Power BI workspace. To add rows to
 the dataset, use pbi_push_rows().
 }
 \details{

@@ -2,14 +2,14 @@
 % Please edit documentation in R/delete.R
 \name{pbi_delete_dataset}
 \alias{pbi_delete_dataset}
-\title{Delete Dataset}
+\title{Delete dataset}
 \usage{
 pbi_delete_dataset(group_id, dataset_id)
 }
 \arguments{
-\item{group_id}{The dataset ID}
+\item{group_id}{The dataset ID.}
 
-\item{dataset_id}{The workspace ID}
+\item{dataset_id}{The workspace ID.}
 }
 \value{
 Deletes the entire dataset.

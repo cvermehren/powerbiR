@@ -3,7 +3,7 @@
 \docType{data}
 \name{dim_market}
 \alias{dim_market}
-\title{Dim Market.}
+\title{Demo data: Dim Market.}
 \format{
 A data frame with 10483 rows and 2 variables:
 \describe{

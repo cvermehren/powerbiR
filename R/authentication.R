@@ -3,15 +3,16 @@
 
 #.pbi_env$token <- NULL
 
-#' Authenticate your Power BI API session
+#' Authenticate your session
 #'
-#' Run this function at start to authenticate your session. An authentication
-#' token is returned invisibly and used by other functions while requesting the
-#' Power BI API. The token is automatically refreshed upon expiration.
+#' Run this function at start to authenticate your Power BI session. An
+#' authentication token is returned invisibly and used by other functions while
+#' requesting the Power BI API. The token is automatically refreshed upon
+#' expiration.
 #'
-#' @param tenant Your Microsoft tenant ID
-#' @param app Your Microsoft app ID
-#' @param password Your Microsoft app password (client secret)
+#' @param tenant Your Microsoft tenant ID.
+#' @param app Your Microsoft app ID.
+#' @param password Your Microsoft app password (client secret).
 #'
 #' @details
 #' To auto-authenticate, you can specify credentials in environment variables

@@ -2,23 +2,23 @@
 % Please edit documentation in R/delete.R
 \name{pbi_delete_rows}
 \alias{pbi_delete_rows}
-\title{Delete Rows}
+\title{Delete rows}
 \usage{
 pbi_delete_rows(group_id, dataset_id, table_name)
 }
 \arguments{
-\item{group_id}{The Power BI workspace ID}
+\item{group_id}{The Power BI workspace ID.}
 
-\item{dataset_id}{The Power BI dataset ID}
+\item{dataset_id}{The Power BI dataset ID.}
 
-\item{table_name}{The Power BI table name}
+\item{table_name}{The Power BI table name.}
 }
 \value{
-All rows will be deleted from the specified table
+All rows will be deleted from the specified table.
 }
 \description{
-Deletes all rows from the specified table within the specified push dataset
-from the specified workspace. Only applicable to push datasets.
+Deletes all rows from the specified table within the specified dataset
+from the specified workspace (group ID). Only applicable to push datasets.
 }
 \details{
 Required scope: Dataset.ReadWrite.All

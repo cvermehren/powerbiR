@@ -1,15 +1,15 @@
-#' Delete Rows
+#' Delete rows
 #'
-#' Deletes all rows from the specified table within the specified push dataset
-#' from the specified workspace. Only applicable to push datasets.
+#' Deletes all rows from the specified table within the specified dataset
+#' from the specified workspace (group ID). Only applicable to push datasets.
 #'
 #' Required scope: Dataset.ReadWrite.All
 #'
-#' @param group_id The Power BI workspace ID
-#' @param dataset_id The Power BI dataset ID
-#' @param table_name The Power BI table name
+#' @param group_id The Power BI workspace ID.
+#' @param dataset_id The Power BI dataset ID.
+#' @param table_name The Power BI table name.
 #'
-#' @return All rows will be deleted from the specified table
+#' @return All rows will be deleted from the specified table.
 #' @export
 #'
 #' @examples
@@ -35,15 +35,15 @@ pbi_delete_rows <- function(group_id, dataset_id, table_name) {
 
 }
 
-#' Delete Dataset
+#' Delete dataset
 #'
 #' Deletes the specified dataset from the specified workspace. Applicable to
 #' push datasets as well as imported datasets.
 #'
 #' Required scope: Dataset.ReadWrite.All
 #'
-#' @param group_id The dataset ID
-#' @param dataset_id The workspace ID
+#' @param group_id The dataset ID.
+#' @param dataset_id The workspace ID.
 #'
 #' @return Deletes the entire dataset.
 #' @export

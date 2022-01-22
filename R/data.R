@@ -1,4 +1,4 @@
-#' Channel Dimension.
+#' Demo data: Channel Dimension.
 #'
 #' Anonymized data from google analytics.
 #'
@@ -14,7 +14,7 @@
 #' @source Google Analytics
 "dim_channel"
 
-#' Dim Market.
+#' Demo data: Dim Market.
 #'
 #' Anonymized data from google analytics.
 #'
@@ -28,7 +28,7 @@
 #' @source Google Analytics
 "dim_market"
 
-#' Fact Web Sales.
+#' Demo data: Fact Web Sales.
 #'
 #' Anonymized data from google analytics.
 #'
