@@ -3,7 +3,7 @@
 
 #.pbi_env$token <- NULL
 
-#' Authenticate your session
+#' Authenticate to Power BI
 #'
 #' Run this function at start to authenticate your Power BI session. An
 #' authentication token is returned invisibly and used by other functions while

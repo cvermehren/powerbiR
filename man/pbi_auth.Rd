@@ -2,7 +2,7 @@
 % Please edit documentation in R/authentication.R
 \name{pbi_auth}
 \alias{pbi_auth}
-\title{Authenticate your session}
+\title{Authenticate to Power BI}
 \usage{
 pbi_auth(
   tenant = Sys.getenv("PBI_TENANT"),
