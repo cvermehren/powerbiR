@@ -2,20 +2,24 @@
 % Please edit documentation in R/delete.R
 \name{pbi_delete_dataset}
 \alias{pbi_delete_dataset}
-\title{Title}
+\title{Delete Dataset}
 \usage{
 pbi_delete_dataset(group_id, dataset_id)
 }
 \arguments{
-\item{group_id}{Grp id}
+\item{group_id}{The dataset ID}
 
-\item{dataset_id}{test}
+\item{dataset_id}{The workspace ID}
 }
 \value{
-Deleted rows
+Deletes the entire dataset.
 }
 \description{
-My description
+Deletes the specified dataset from the specified workspace. Applicable to
+push datasets as well as imported datasets.
+}
+\details{
+Required scope: Dataset.ReadWrite.All
 }
 \examples{
 

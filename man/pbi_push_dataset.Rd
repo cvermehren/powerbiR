@@ -7,18 +7,22 @@
 pbi_push_dataset(schema, group_id, retention = c("none", "basicFIFO"))
 }
 \arguments{
-\item{schema}{A push-dataset schema created by pbi_schema_create()}
+\item{schema}{A push-dataset schema created by pbi_schema_create().}
 
-\item{group_id}{The ID of the destination Power BI workspace}
+\item{group_id}{The ID of the destination Power BI workspace.}
 
-\item{retention}{The retention policy of the dataset. Default is "none"}
+\item{retention}{The retention policy of the dataset. Default is "none".}
 }
 \value{
 A dataset with tables and optionally defined relationships will be
-  created in the specified Power BI workspace
+  created in the specified Power BI workspace.
 }
 \description{
-Pushes a dataset to a Power BI workspace.
+Pushes an empty dataset to the specified Power BI workspace. To add rows to
+the dataset, use pbi_push_rows().
+}
+\details{
+Required scope: Dataset.ReadWrite.All
 }
 \examples{
 

@@ -3,6 +3,8 @@
 #' Returns the ids and meta data of all Power BI workspaces to which the service
 #' principal app has been granted access.
 #'
+#' Required scope: Workspace.Read.All or Workspace.ReadWrite.All
+#'
 #' @return A data.table / data frame.
 #' @export
 #'
@@ -27,12 +29,12 @@ pbi_list_groups <- function() {
 
 }
 
-
-
 #' Get datasets in workspace
 #'
 #' Returns the ids and meta data of all available datasets in a specific
 #' Power BI workspace.
+#'
+#' Required scope: Dataset.ReadWrite.All or Dataset.Read.All
 #'
 #' @param group_id The Power BI workspace id
 #'

@@ -1,13 +1,16 @@
 #' Push Dataset
 #'
-#' Pushes a dataset to a Power BI workspace.
+#' Pushes an empty dataset to the specified Power BI workspace. To add rows to
+#' the dataset, use pbi_push_rows().
 #'
-#' @param schema A push-dataset schema created by pbi_schema_create()
-#' @param group_id The ID of the destination Power BI workspace
-#' @param retention The retention policy of the dataset. Default is "none"
+#' Required scope: Dataset.ReadWrite.All
+#'
+#' @param schema A push-dataset schema created by pbi_schema_create().
+#' @param group_id The ID of the destination Power BI workspace.
+#' @param retention The retention policy of the dataset. Default is "none".
 #'
 #' @return A dataset with tables and optionally defined relationships will be
-#'   created in the specified Power BI workspace
+#'   created in the specified Power BI workspace.
 #' @export
 #'
 #' @examples
@@ -32,21 +35,27 @@ pbi_push_dataset <- function(schema,
 
   resp <- httr::POST(url, header, body = schema, encode = "json")
 
-  if (httr::http_error(resp)) {stop(resp, call. = FALSE)}
+  if (httr::http_error(resp)) {stop(httr::content(resp), call. = FALSE)}
 
   message("Successful push, status code: ", httr::status_code(resp))
 
 }
 
 
-#' Title
+#' Push Rows
 #'
-#' My description
+#' Adds new data rows to the specified table within the specified push dataset
+#' from the specified Power BI workspace. Only applicable to push datasets.
 #'
-#' @param dt A data.table
-#' @param group_id The grp id, workspace
-#' @param dataset_id The dataset
-#' @param table_name The name of the table
+#' Required scope: Dataset.ReadWrite.All
+#'
+#' @param dt A data frame with rows to be added to the specified Power BI table
+#'   (table_name). The columns and datatypes must match the specified table.
+#' @param group_id The ID of the destination Power BI workspace.
+#' @param dataset_id The ID of the destination Power BI dataset.
+#' @param table_name The name of the destination Power BI table.
+#' @param overwrite If TRUE, existing rows will be deleted prior to adding new
+#'   rows. If FALSE, the new rows will be appended to the existing rows.
 #'
 #' @return A dataset with tables and optionally defined relationships will be
 #'   created in the specified Power BI workspace
@@ -58,7 +67,13 @@ pbi_push_dataset <- function(schema,
 #'
 #' pbi_push_rows(my_data, my_group_id)
 #' }
-pbi_push_rows <- function(dt, group_id, dataset_id, table_name) {
+pbi_push_rows <- function(dt,
+                          group_id,
+                          dataset_id,
+                          table_name,
+                          overwrite = FALSE) {
+
+  if(overwrite) pbi_delete_rows(group_id, dataset_id, table_name)
 
   push_list <- split(dt, (as.numeric(rownames(dt))-1) %/% 10000)
 

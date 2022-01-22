@@ -1,13 +1,15 @@
-
-#' Title
+#' Delete Rows
 #'
-#' This is my description.
+#' Deletes all rows from the specified table within the specified push dataset
+#' from the specified workspace. Only applicable to push datasets.
 #'
-#' @param group_id The grp id
-#' @param dataset_id The dataset id
-#' @param table_name The table name
+#' Required scope: Dataset.ReadWrite.All
 #'
-#' @return Rows will be deleted
+#' @param group_id The Power BI workspace ID
+#' @param dataset_id The Power BI dataset ID
+#' @param table_name The Power BI table name
+#'
+#' @return All rows will be deleted from the specified table
 #' @export
 #'
 #' @examples
@@ -27,20 +29,23 @@ pbi_delete_rows <- function(group_id, dataset_id, table_name) {
 
   resp <- httr::DELETE(url, header)
 
-  if (httr::http_error(resp)) {stop(resp, call. = FALSE)}
+  if (httr::http_error(resp)) {stop(httr::content(resp), call. = FALSE)}
 
   message("Successfully deleted all rows from ", table_name)
 
 }
 
-#' Title
+#' Delete Dataset
 #'
-#' My description
+#' Deletes the specified dataset from the specified workspace. Applicable to
+#' push datasets as well as imported datasets.
 #'
-#' @param group_id Grp id
-#' @param dataset_id test
+#' Required scope: Dataset.ReadWrite.All
 #'
-#' @return Deleted rows
+#' @param group_id The dataset ID
+#' @param dataset_id The workspace ID
+#'
+#' @return Deletes the entire dataset.
 #' @export
 #'
 #' @examples
@@ -60,7 +65,7 @@ pbi_delete_dataset <- function(group_id, dataset_id) {
 
   resp <- httr::DELETE(url, header)
 
-  if (httr::http_error(resp)) {stop(resp, call. = FALSE)}
+  if (httr::http_error(resp)) {stop(httr::content(resp), call. = FALSE)}
 
   message("Successfully deleted dataset with ID ", dataset_id)
 

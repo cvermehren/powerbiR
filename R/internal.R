@@ -125,12 +125,10 @@ pbi_row_push_few <- function(dt,
 
   resp <- httr::POST(url, header, body = rows, encode = 'json')
 
-  if (httr::http_error(resp)) {stop(resp, call. = FALSE)}
+  if (httr::http_error(resp)) {stop(httr::content(resp), call. = FALSE)}
 
   message("Successful push, status code: ", httr::status_code(resp))
 
 
 
 }
-
-

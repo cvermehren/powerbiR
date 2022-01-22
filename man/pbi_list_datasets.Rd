@@ -16,6 +16,9 @@ A data.table / data frame.
 Returns the ids and meta data of all available datasets in a specific
 Power BI workspace.
 }
+\details{
+Required scope: Dataset.ReadWrite.All or Dataset.Read.All
+}
 \examples{
 
 \dontrun{

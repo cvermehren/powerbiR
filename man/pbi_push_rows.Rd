@@ -2,25 +2,33 @@
 % Please edit documentation in R/push.R
 \name{pbi_push_rows}
 \alias{pbi_push_rows}
-\title{Title}
+\title{Push Rows}
 \usage{
-pbi_push_rows(dt, group_id, dataset_id, table_name)
+pbi_push_rows(dt, group_id, dataset_id, table_name, overwrite = FALSE)
 }
 \arguments{
-\item{dt}{A data.table}
+\item{dt}{A data frame with rows to be added to the specified Power BI table
+(table_name). The columns and datatypes must match the specified table.}
 
-\item{group_id}{The grp id, workspace}
+\item{group_id}{The ID of the destination Power BI workspace.}
 
-\item{dataset_id}{The dataset}
+\item{dataset_id}{The ID of the destination Power BI dataset.}
 
-\item{table_name}{The name of the table}
+\item{table_name}{The name of the destination Power BI table.}
+
+\item{overwrite}{If TRUE, existing rows will be deleted prior to adding new
+rows. If FALSE, the new rows will be appended to the existing rows.}
 }
 \value{
 A dataset with tables and optionally defined relationships will be
   created in the specified Power BI workspace
 }
 \description{
-My description
+Adds new data rows to the specified table within the specified push dataset
+from the specified Power BI workspace. Only applicable to push datasets.
+}
+\details{
+Required scope: Dataset.ReadWrite.All
 }
 \examples{
 

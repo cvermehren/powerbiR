@@ -13,6 +13,9 @@ A data.table / data frame.
 Returns the ids and meta data of all Power BI workspaces to which the service
 principal app has been granted access.
 }
+\details{
+Required scope: Workspace.Read.All or Workspace.ReadWrite.All
+}
 \examples{
 
 \dontrun{
