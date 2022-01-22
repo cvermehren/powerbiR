@@ -115,6 +115,8 @@ pbi_row_push_few <- function(dt,
                              dataset_id,
                              table_name) {
 
+  rowcount <- nrow(dt)
+
   token <- pbi_get_token()
 
   url <- paste0("https://api.powerbi.com/v1.0/myorg/groups/", group_id, "/datasets/", dataset_id, "/tables/", table_name, "/rows")
@@ -128,8 +130,6 @@ pbi_row_push_few <- function(dt,
 
   if (httr::http_error(resp)) {stop(httr::content(resp), call. = FALSE)}
 
-  message("Successful push, status code: ", httr::status_code(resp))
+  message("Successfully added ", rowcount," rows to ", table_name)
 
-
-
-}
+  }

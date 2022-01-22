@@ -37,7 +37,7 @@ pbi_push_dataset <- function(schema,
 
   if (httr::http_error(resp)) {stop(httr::content(resp), call. = FALSE)}
 
-  message("Successful push, status code: ", httr::status_code(resp))
+  message("Successful created empty dataset in Power BI.")
 
 }
 
