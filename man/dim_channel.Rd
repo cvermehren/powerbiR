@@ -5,22 +5,20 @@
 \alias{dim_channel}
 \title{Demo data: Dim Channel}
 \format{
-A data frame with 616 rows and 5 columns:
-\describe{
-  \item{channel_key}{customer ID, factor vector}
-  \item{channel_grouping}{transaction date1}
-  \item{source}{transaction date2}
-  \item{medium}{transaction date3}
-  \item{campaign}{transaction date4}
-  }
+A data frame with 616 rows and 5 columns: \describe{
+  \item{channel_key}{Primary key (unique identifyer of channels).}
+  \item{channel_grouping}{The main type of channel, e.g. Email, Social.}
+  \item{source}{The source of referrals.}
+  \item{medium}{The type of referrals.}
+  \item{campaign}{The name of the campaign.} }
 }
 \source{
-Google Analytics
+Anonymized data from google analytics.
 }
 \usage{
 dim_channel
 }
 \description{
-Anonymized data from google analytics.
+A look-up dimension related to Fact Web Sales through the channel_key column.
 }
 \keyword{datasets}

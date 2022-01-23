@@ -7,18 +7,18 @@
 \format{
 A data frame with 2 rows and 3 columns:
 \describe{
-  \item{market_key}{customer ID, factor vector a}
-  \item{view_name}{transaction date1 b}
-  \item{country}{transaction date2 c}
+  \item{market_key}{Primary key (unique identifyer of markets).}
+  \item{view_name}{The name of the Google Analytics View.}
+  \item{country}{The country associated with the Google Analytics View.}
   }
 }
 \source{
-Google Analytics
+Anonymized data from google analytics.
 }
 \usage{
 dim_market
 }
 \description{
-Anonymized data from google analytics.
+A look-up dimension related to Fact Web Sales through the market_key column.
 }
 \keyword{datasets}
