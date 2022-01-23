@@ -1,4 +1,4 @@
-#' Demo data: Channel Dimension
+#' Demo data: Dim Channel
 #'
 #' Anonymized data from google analytics.
 #'
