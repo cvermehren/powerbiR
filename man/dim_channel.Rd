@@ -3,7 +3,7 @@
 \docType{data}
 \name{dim_channel}
 \alias{dim_channel}
-\title{Demo data: Channel Dimension.}
+\title{Demo data: Channel Dimension}
 \format{
 A data frame with 10483 rows and 2 variables:
 \describe{
