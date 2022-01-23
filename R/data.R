@@ -2,7 +2,7 @@
 #'
 #' Anonymized data from google analytics.
 #'
-#' @format A data frame with 10483 rows and 2 variables:
+#' @format A data frame with 616 rows and 5 columns:
 #' \describe{
 #'   \item{channel_key}{customer ID, factor vector}
 #'   \item{channel_grouping}{transaction date1}
@@ -18,7 +18,7 @@
 #'
 #' Anonymized data from google analytics.
 #'
-#' @format A data frame with 10483 rows and 2 variables:
+#' @format A data frame with 2 rows and 3 columns:
 #' \describe{
 #'   \item{market_key}{customer ID, factor vector a}
 #'   \item{view_name}{transaction date1 b}
@@ -32,7 +32,7 @@
 #'
 #' Anonymized data from google analytics.
 #'
-#' @format A data frame with 10483 rows and 2 variables:
+#' @format A data frame with 1,500 rows and 9 columns:
 #' \describe{
 #'   \item{date}{customer ID, factor vector a}
 #'   \item{market_key}{transaction date2 c}

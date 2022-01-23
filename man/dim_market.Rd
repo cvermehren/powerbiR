@@ -5,7 +5,7 @@
 \alias{dim_market}
 \title{Demo data: Dim Market}
 \format{
-A data frame with 10483 rows and 2 variables:
+A data frame with 2 rows and 3 columns:
 \describe{
   \item{market_key}{customer ID, factor vector a}
   \item{view_name}{transaction date1 b}

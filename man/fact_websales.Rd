@@ -5,7 +5,7 @@
 \alias{fact_websales}
 \title{Demo data: Fact Web Sales}
 \format{
-A data frame with 10483 rows and 2 variables:
+A data frame with 1,500 rows and 9 columns:
 \describe{
   \item{date}{customer ID, factor vector a}
   \item{market_key}{transaction date2 c}

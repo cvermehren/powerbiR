@@ -5,7 +5,7 @@
 \alias{dim_channel}
 \title{Demo data: Dim Channel}
 \format{
-A data frame with 10483 rows and 2 variables:
+A data frame with 616 rows and 5 columns:
 \describe{
   \item{channel_key}{customer ID, factor vector}
   \item{channel_grouping}{transaction date1}
