@@ -1,12 +1,15 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# powerbiR
+# The powerbiR Package
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of powerbiR is to …
+The goal of powerbiR is to make it easy to interact with the Power BI
+REST API using R. It provides functions for, among other things, pushing
+data frames to Power BI Service, refreshing imported datasets, monitor
+refresh statuses and pulling useful metadata about workspaces and users.
 
 ## Installation
 
