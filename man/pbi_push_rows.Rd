@@ -28,6 +28,12 @@ Adds new data rows to the specified table within the specified dataset
 from the specified Power BI workspace. Only applicable to push datasets.
 }
 \details{
+The Power BI REST has a limit of 10K rows per POST rows request. This limit
+is handled by splitting the data frame into chunks of 10K rows each and
+pushing these chunks one at a time. However, you should manually observe the
+other limitations of the API. See
+\url{https://docs.microsoft.com/en-au/rest/api/power-bi/} for more details.
+
 Required scope: Dataset.ReadWrite.All
 }
 \examples{
