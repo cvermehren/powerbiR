@@ -82,7 +82,7 @@ pbi_dataset_refresh_hist <- function(group_id, dataset_id) {
 
   resp <- get_request(url = url, header = header)
 
-  value <- suppressWarnings( rbindlist(value, fill = TRUE))
+  value <- suppressWarnings( rbindlist(resp$value, fill = TRUE))
   value[, group_id := group_id]
 
   error_messages <- value[
@@ -90,7 +90,7 @@ pbi_dataset_refresh_hist <- function(group_id, dataset_id) {
     rbindlist(lapply(serviceExceptionJson, jsonlite::fromJSON), use.names = TRUE, fill = TRUE),
     by = list(requestId)]
 
-  value <- merge(value, error_messages, all.x = T)
+  value <- merge(value, error_messages, all.x = T, by = "requestId")
   value
 }
 
