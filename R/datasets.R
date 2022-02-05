@@ -54,24 +54,43 @@ pbi_dataset_refresh <- function(group_id,
 # resp[["value"]][[index]]$requestId
 
 
-pbi_dataset_refresh_hist <- function(group_id, dataset_id, request_id = NULL) {
+#' Refresh history of a dataset
+#'
+#' Returns the refresh history for the specified dataset from the specified workspace.
+#'
+#' @param group_id The workspace ID
+#' @param dataset_id The dataset ID
+#'
+#' @return A data frame
+#' @export
+#'
+#' @examples
+#'
+#' \dontrun{
+#'
+#' pbi_dataset_refresh_hist(group_id, dataset_id)
+#' }
+pbi_dataset_refresh_hist <- function(group_id, dataset_id) {
+
+  # Due to notes in R CMD check
+  value=requestId=serviceExceptionJson=NULL
 
   token <- pbi_get_token()
 
   url <- paste0("https://api.powerbi.com/v1.0/myorg/groups/", group_id,"/datasets/", dataset_id, "/refreshes/")
-  url <- utils::URLencode(url)
+  header <- httr::add_headers(Authorization = paste("Bearer", token))
 
-  header <- httr::add_headers(Authorization = paste("Bearer", token) )
+  resp <- get_request(url = url, header = header)
 
-  resp <- httr::GET(url, header)
+  value <- suppressWarnings( rbindlist(value, fill = TRUE))
+  value[, group_id := group_id]
 
-  if (httr::http_error(resp)) {stop(httr::content(resp), call. = FALSE)}
+  error_messages <- value[
+    !is.na(serviceExceptionJson),
+    rbindlist(lapply(serviceExceptionJson, jsonlite::fromJSON), use.names = TRUE, fill = TRUE),
+    by = list(requestId)]
 
-  #request_id <- resp[["headers"]][["requestid"]]
-
-  resp <- httr::content(resp)
-  resp <- rbindlist(resp$value, fill = TRUE)
-
-  if(!is.null(request_id)) resp[resp$requestId == request_id]$status
-
+  value <- merge(value, error_messages, all.x = T)
+  value
 }
+

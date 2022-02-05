@@ -2,6 +2,7 @@
 
 export(pbi_auth)
 export(pbi_dataset_refresh)
+export(pbi_dataset_refresh_hist)
 export(pbi_delete_dataset)
 export(pbi_delete_rows)
 export(pbi_list_datasets)
