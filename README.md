@@ -31,6 +31,13 @@ You can install the development version of powerbiR from
 devtools::install_github("cvermehren/powerbiR")
 ```
 
+## Authentication
+
+To authenticate, you first of all need to create an app in the Power BI
+Developer’s portal. This app will provide us with a reusable Client ID
+and a Client Secret key, using which we can generate the embed token
+required for the REST API.
+
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
