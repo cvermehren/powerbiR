@@ -6,10 +6,20 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of powerbiR is to make it easy to interact with the Power BI
-REST API using R. It provides functions for, among other things, pushing
-data frames to Power BI Service, refreshing imported datasets, monitor
-refresh statuses and pulling useful metadata about workspaces and users.
+The main goal of this package is to make it easy to implement real-time
+dashboards using R and the Power BI REST API.
+
+The following workflow is supported:
+
+-   Create an empty Power BI push dataset from a list of data frames
+-   Upload this dataset to Power BI Service
+-   Populate the dataset with data
+-   Push new data continuously to the dataset
+
+A set of functions is also provided for managing administrative tasks
+such as getting a list of datasets, refreshing imported datasets,
+monitor refresh statuses and pulling useful metadata about workspaces
+and users.
 
 ## Installation
 
@@ -26,7 +36,7 @@ devtools::install_github("cvermehren/powerbiR")
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
-library(powerbiR)
+##library(powerbiR)
 ## basic example code
 ```
 
