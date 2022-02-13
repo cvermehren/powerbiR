@@ -16,6 +16,7 @@
 #'   '#,###0'.
 #' @param double_format The format of double columns (if any). Default is
 #'   '#,###.00'.
+#' @param sort_by_col List of cols to be sorted.
 #' @param default_mode The dataset mode or type. Defaults to 'Push'.
 #'
 #' @import data.table
@@ -36,8 +37,24 @@ pbi_schema_create <- function(
   date_format = "yyyy-mm-dd",
   integer_format = "#,###0",
   double_format = "#,###.00",
+  sort_by_col = NULL,
   default_mode = c("Push", "Streaming", "PushStreaming", "AsOnPrem",
                    "AsAzure")) {
+
+  if(!is.null(sort_by_col)) {
+
+    tbl_index <- which(table_name_list %in% sort_by_col$table)
+
+
+    for (i in tbl_index) {
+
+      sort_index <- which(sort_by_col$table ==table_name_list[i])
+
+      attr(dt_list[[i]], "sort_table") <- table_name_list[i]
+      attr(dt_list[[i]], "sort") <- sort_by_col$sort[sort_index]
+      attr(dt_list[[i]], "sort_by") <- sort_by_col$sort_by[sort_index]
+    }
+  }
 
   dt_list <- lapply(
     dt_list,

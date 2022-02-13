@@ -12,6 +12,7 @@ pbi_schema_create(
   date_format = "yyyy-mm-dd",
   integer_format = "#,###0",
   double_format = "#,###.00",
+  sort_by_col = NULL,
   default_mode = c("Push", "Streaming", "PushStreaming", "AsOnPrem", "AsAzure")
 )
 }
@@ -34,6 +35,8 @@ pbi_schema_relation_create()}
 
 \item{double_format}{The format of double columns (if any). Default is
 '#,###.00'.}
+
+\item{sort_by_col}{List of cols to be sorted.}
 
 \item{default_mode}{The dataset mode or type. Defaults to 'Push'.}
 }

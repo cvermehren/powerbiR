@@ -31,6 +31,7 @@ pbi_schema_types_infer <- function(vector) {
   else return("String")
 }
 
+
 # Define Power BI formats for columns of a data frame. Used in pbi_schema_table_prop().
 pbi_schema_column_prop <- function(
   dt,
@@ -39,6 +40,8 @@ pbi_schema_column_prop <- function(
   integer_format = "#,###0",
   double_format = "#,###.00"
 ) {
+
+  sortByColumn=NULL
 
   cols <- names(dt)
   data_types <- sapply(dt, pbi_schema_types_infer)
@@ -65,6 +68,17 @@ pbi_schema_column_prop <- function(
       )
     )
   )
+
+  if(!is.null(attr(dt, "sort_table"))) {
+
+    res <-  rep(NA, length(cols))
+    sort <- attr(dt, "sort")
+    sort_by <- attr(dt, "sort_by")
+    res <- c(sort_by, res)[match(cols, c(sort, cols))]
+
+    table$columns[[1]][, sortByColumn := res]
+
+  }
 
   return(table)
 
