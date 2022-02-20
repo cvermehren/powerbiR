@@ -13,6 +13,7 @@ pbi_schema_create(
   integer_format = "#,###0",
   double_format = "#,###.00",
   sort_by_col = NULL,
+  hidden_col = NULL,
   default_mode = c("Push", "Streaming", "PushStreaming", "AsOnPrem", "AsAzure")
 )
 }
@@ -37,6 +38,8 @@ pbi_schema_relation_create()}
 '#,###.00'.}
 
 \item{sort_by_col}{List of cols to be sorted.}
+
+\item{hidden_col}{List of cols to be hidden.}
 
 \item{default_mode}{The dataset mode or type. Defaults to 'Push'.}
 }

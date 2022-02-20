@@ -17,6 +17,7 @@
 #' @param double_format The format of double columns (if any). Default is
 #'   '#,###.00'.
 #' @param sort_by_col List of cols to be sorted.
+#' @param hidden_col List of cols to be hidden.
 #' @param default_mode The dataset mode or type. Defaults to 'Push'.
 #'
 #' @import data.table
@@ -38,22 +39,39 @@ pbi_schema_create <- function(
   integer_format = "#,###0",
   double_format = "#,###.00",
   sort_by_col = NULL,
+  hidden_col = NULL,
   default_mode = c("Push", "Streaming", "PushStreaming", "AsOnPrem",
                    "AsAzure")) {
 
+
+
   if(!is.null(sort_by_col)) {
 
-    tbl_index <- which(table_name_list %in% sort_by_col$table)
+    for (i in seq_along(sort_by_col)) {
 
+      tbl_index <- which(table_name_list %in% sort_by_col[[i]]$table)
 
-    for (i in tbl_index) {
+      sort <- sort_by_col[[i]]$sort
+      sort_by <- sort_by_col[[i]]$sort_by
 
-      sort_index <- which(sort_by_col$table ==table_name_list[i])
+      dt_list[[tbl_index]] <- pbi_schema_sort(dt_list[[tbl_index]], sort = sort, sort_by = sort_by)
 
-      attr(dt_list[[i]], "sort_table") <- table_name_list[i]
-      attr(dt_list[[i]], "sort") <- sort_by_col$sort[sort_index]
-      attr(dt_list[[i]], "sort_by") <- sort_by_col$sort_by[sort_index]
     }
+  }
+
+  if(!is.null(hidden_col)) {
+
+    for (i in seq_along(hidden_col)) {
+
+      tbl_index <- which(table_name_list %in% hidden_col[[i]]$table)
+
+      hidden <- hidden_col[[i]]$hidden
+
+      dt_list[[tbl_index]] <- pbi_schema_hidden(dt_list[[tbl_index]], hidden = hidden)
+
+    }
+
+
   }
 
   dt_list <- lapply(

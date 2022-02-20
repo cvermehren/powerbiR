@@ -41,7 +41,7 @@ pbi_schema_column_prop <- function(
   double_format = "#,###.00"
 ) {
 
-  sortByColumn=NULL
+  #sortByColumn=isHidden=NULL
 
   cols <- names(dt)
   data_types <- sapply(dt, pbi_schema_types_infer)
@@ -69,20 +69,43 @@ pbi_schema_column_prop <- function(
     )
   )
 
-  if(!is.null(attr(dt, "sort_table"))) {
+  if(!is.null(attr(dt, "sort_by_cols"))) {
 
-    res <-  rep(NA, length(cols))
-    sort <- attr(dt, "sort")
-    sort_by <- attr(dt, "sort_by")
-    res <- c(sort_by, res)[match(cols, c(sort, cols))]
+    sort_by_cols <- attr(dt, "sort_by_cols")
+    table$columns[[1]] <- sort_by_cols[table$columns[[1]], on = "name"]
 
-    table$columns[[1]][, sortByColumn := res]
+  }
+
+  if(!is.null(attr(dt, "hidden_cols"))) {
+
+    hidden_cols <- attr(dt, "hidden_cols")
+    table$columns[[1]] <- hidden_cols[table$columns[[1]], on = "name"]
 
   }
 
   return(table)
 
 }
+
+pbi_schema_sort <- function(dt, sort = NULL, sort_by = NULL) {
+
+  sorttbl <- data.table(name = sort, sortByColumn = sort_by)
+  attr(dt, "sort_by_cols") <- sorttbl
+
+  return(dt)
+
+}
+
+
+pbi_schema_hidden <- function(dt, hidden = NULL) {
+
+  hidtbl <- data.table(name = hidden, isHidden = TRUE)
+  attr(dt, "hidden_cols") <- hidtbl
+
+  return(dt)
+
+}
+
 
 pbi_schema_table_prop <- function(dt,
                                   date_format = "yyyy-mm-dd",
