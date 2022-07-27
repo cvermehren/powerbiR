@@ -16,8 +16,11 @@
 #'   '#,###0'.
 #' @param double_format The format of double columns (if any). Default is
 #'   '#,###.00'.
-#' @param sort_by_col List of cols to be sorted.
-#' @param hidden_col List of cols to be hidden.
+#' @param sort_by_col A list of lists of column-sorting definitions. The inner
+#'   lists must include elements named 'table', 'sort' and 'sort_by'. See
+#'   example for more details.
+#' @param hidden_col A list of lists columns to be hidden. The inner lists must
+#'   include elements named 'table' and 'hidden'. See examples for more details.
 #' @param default_mode The dataset mode or type. Defaults to 'Push'.
 #'
 #' @import data.table
@@ -25,11 +28,53 @@
 #' @export
 #'
 #' @examples
-#' pbi_schema_create(
-#'   dt_list = list(iris, mtcars),
-#'   dataset_name = "An iris and mtcars dataset",
-#'   table_name_list = list("iris", "mtcars")
+#' # Load package
+#' library(powerbiR)
+#'
+#' # Use data from the powerbiR package
+#' data(dim_hour)
+#' data(fact_visitors)
+#'
+#' # Define dataset and its tables
+#' table_list <- list(fact_visitors, dim_hour)
+#' table_names  <- c("visitors", "hour")
+#' dataset_name <- c("Online Visitors")
+#'
+#' # Define relations between tables
+#' relation <- pbi_schema_relation_create(
+#'   from_table = "visitors",
+#'   from_column = "hour_key",
+#'   to_table = "hour"
+#' )
+#'
+#' # Define sorting behavior of columns in the hour table
+#' sortlist = list(
+#'   table = c("hour"),
+#'   sort = c("hour"),
+#'   sort_by = c("hour_key")
+#' )
+#'
+#' # Hide hour_key in the hour and visitors tables
+#' hidden <- list(
+#'   list(
+#'     table = c("hour"),
+#'     hidden = c("hour_key")
+#'   ),
+#'   list(
+#'     table = c("visitors"),
+#'     hidden = c("hour_key", "visitor_id")
 #'   )
+#' )
+#'
+#' # Create schema
+#' schema <- pbi_schema_create(
+#'   dt_list = table_list,
+#'   dataset_name = dataset_name,
+#'   table_name_list = table_names,
+#'   relations_list = list(relation),
+#'   sort_by_col = list(sortlist),
+#'   hidden_col = hidden
+#' )
 pbi_schema_create <- function(
   dt_list,
   dataset_name = "My Power BI Dataset",
