@@ -5,16 +5,18 @@
 
 #' Authenticate to Power BI
 #'
-#' Run this function at start to authenticate your Power BI session. An
-#' authentication token is returned invisibly and used by other functions while
-#' requesting the Power BI API. The token is automatically refreshed upon
-#' expiration.
+#' This function authenticates your Power BI session using a service principal
+#' that represents an application registered in Azure Active Directory.
 #'
 #' @param tenant Your Microsoft tenant ID.
 #' @param app Your Microsoft app ID.
 #' @param password Your Microsoft app password (client secret).
 #'
 #' @details
+#' The function returns an authentication token invisibly and makes it available
+#' to other functions in this package. The token is automatically refreshed upon
+#' expiration.
+#'
 #' To auto-authenticate, you can specify credentials in environment variables
 #' via an \env{.Renviron} file or using \code{\link{Sys.setenv}} (see example
 #' below).
@@ -58,7 +60,8 @@ pbi_auth <- function(tenant = Sys.getenv("PBI_TENANT"),
   ))
 
   if (inherits(.pbi_env$token, "try-error")) {
-    stop("Please save your Azure tenant ID, App ID and client secret in an environment variable.\nSee ?pbi_auth() for details.")
+    stop("Please save your Azure tenant ID, App ID and client secret in an environment variable.\n",
+         "See ?pbi_auth() for details.")
     }
 }
 

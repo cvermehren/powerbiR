@@ -4,18 +4,40 @@
 \alias{pbi_dataset_refresh_hist}
 \title{Refresh history of a dataset}
 \usage{
-pbi_dataset_refresh_hist(group_id, dataset_id)
+pbi_dataset_refresh_hist(group_id, dataset_id, top = NULL, request_id = NULL)
 }
 \arguments{
 \item{group_id}{The workspace ID}
 
 \item{dataset_id}{The dataset ID}
+
+\item{top}{The number of most recent entries in the refresh history. The
+default is all available entries.}
+
+\item{request_id}{The request ID returned by pbi_dataset_refresh(). If
+provided the refresh status of the request ID is returned.}
 }
 \value{
-A data frame
+A data frame with status, start and end times of historical refreshes
+  or a single refresh status message if \code{request_id} is used.
 }
 \description{
-Returns the refresh history for the specified dataset from the specified workspace.
+Returns the refresh history for the specified dataset from the specified
+workspace.
+}
+\details{
+By default the function will return all historical refreshes. You
+  can reduce the list to the most recent refreshes using the \code{top}
+  argument.
+
+  If \code{request_id} is provided the function will return a single refresh
+  status, but will still query the Power BI API for all historical entries.
+  If you query the top 5 most recent refreshes using the \code{top} argument,
+  the function will only return a status if the provided request_id is in
+  this list.
+
+  The status value return can be either 'Completed', 'Failed' or 'Unknown',
+  which means that the refresh is still in progress.
 }
 \examples{
 
@@ -23,4 +45,7 @@ Returns the refresh history for the specified dataset from the specified workspa
 
 pbi_dataset_refresh_hist(group_id, dataset_id)
 }
+}
+\seealso{
+\link{pbi_dataset_refresh}
 }

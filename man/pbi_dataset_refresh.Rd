@@ -4,22 +4,15 @@
 \alias{pbi_dataset_refresh}
 \title{Refresh dataset}
 \usage{
-pbi_dataset_refresh(
-  group_id,
-  dataset_id,
-  notify = c("MailOnFailure", "MailOnCompletion", "NoNotification")
-)
+pbi_dataset_refresh(group_id, dataset_id)
 }
 \arguments{
 \item{group_id}{The ID of the workspace.}
 
 \item{dataset_id}{The ID of the dataset.}
-
-\item{notify}{Mail notification options. Must be one of 'MailOnFailure',
-'MailOnCompletion', 'NoNotification'. Defaults to 'MailOnFailure'.}
 }
 \value{
-The specified dataset will be refreshed.
+If successful, the refresh request ID is returned.
 }
 \description{
 Triggers a refresh for the specified dataset from the specified workspace.
@@ -28,6 +21,27 @@ Triggers a refresh for the specified dataset from the specified workspace.
 
 \dontrun{
 
+# View Power BI workspaces (group IDs) available to your session
+available_ws <- pbi_list_groups()
+
+# Select a workspace
+workspace <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+# View datasets in the workspace
+available_dataset_ids <- pbi_list_datasets(group_id = workspace)
+
+# Select a dataset to refresh
+dataset_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+# Refresh the dataset
 pbi_dataset_refresh(group_id, dataset_id)
+#> A refresh of dataset xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx was triggered.
+#>
+#> To check status, use pbi_dataset_refresh_hist() and the request ID returned
+#> by this function.
+#> [1] "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 }
+}
+\seealso{
+\link{pbi_dataset_refresh_hist}
 }
