@@ -32,7 +32,10 @@ pbi_list_groups <- function() {
     stop("The Power BI API returned an empty value or the value could not be parsed.")
   }
 
-  data.table::rbindlist(resp$value)
+  value <- data.table::rbindlist(resp$value)
+  data.table::setDF(value)
+
+  return(value)
 
 }
 
@@ -66,7 +69,8 @@ pbi_list_datasets <- function(group_id) {
   value <- suppressWarnings( rbindlist(resp$value))
   value[, group_id := group_id]
 
-  data.table(value)
+  data.table::setDF(value)
+  return(value)
 
 }
 

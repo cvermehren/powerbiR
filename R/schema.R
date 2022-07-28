@@ -88,8 +88,6 @@ pbi_schema_create <- function(
   default_mode = c("Push", "Streaming", "PushStreaming", "AsOnPrem",
                    "AsAzure")) {
 
-
-
   if(!is.null(sort_by_col)) {
 
     for (i in seq_along(sort_by_col)) {
@@ -100,7 +98,6 @@ pbi_schema_create <- function(
       sort_by <- sort_by_col[[i]]$sort_by
 
       dt_list[[tbl_index]] <- pbi_schema_sort(dt_list[[tbl_index]], sort = sort, sort_by = sort_by)
-
     }
   }
 
@@ -113,10 +110,7 @@ pbi_schema_create <- function(
       hidden <- hidden_col[[i]]$hidden
 
       dt_list[[tbl_index]] <- pbi_schema_hidden(dt_list[[tbl_index]], hidden = hidden)
-
     }
-
-
   }
 
   dt_list <- lapply(
@@ -145,9 +139,7 @@ pbi_schema_create <- function(
       schema = dt_list,
       rel_list = relations_list
     )
-
   }
-
 
   return(dt_list)
 }
@@ -172,16 +164,16 @@ pbi_schema_create <- function(
 #'
 #' @examples
 #' # An example
-pbi_schema_relation_create <- function(from_table = NULL,
-                                       from_column = NULL,
-                                       to_table = NULL,
+pbi_schema_relation_create <- function(from_table,
+                                       from_column,
+                                       to_table,
                                        to_column = from_column,
                                        direction = c("OneDirection", "BothDirections", "Automatic"),
                                        name = paste0(from_table, to_table, from_column)) {
 
-  if(is.null(from_table)) stop("Please specify the table from which the relationship starts (from_table)")
-  if(is.null(from_column)) stop("Please specify the joining key column in the 'from_table'")
-  if(is.null(to_table)) stop("Please specify the table at which the relationship ends (to_table)")
+  # if(!exists("from_table")) stop("Please specify the table from which the relationship starts (from_table)")
+  # if(!exists("from_column")) stop("Please specify the joining key column in the 'from_table'")
+  # if(!exists("to_table")) stop("Please specify the table at which the relationship ends (to_table)")
 
   direction <- match.arg(direction)
 
@@ -194,9 +186,6 @@ pbi_schema_relation_create <- function(from_table = NULL,
     crossFilteringBehavior = direction
   )
 }
-
-
-
 
 # pbi_schema_add_measures <- function(schema, table_name, measures) {
 #

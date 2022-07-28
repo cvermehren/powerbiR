@@ -33,15 +33,11 @@ pbi_schema_types_infer <- function(vector) {
 
 
 # Define Power BI formats for columns of a data frame. Used in pbi_schema_table_prop().
-pbi_schema_column_prop <- function(
-  dt,
-  table_name = "table1",
-  date_format = "yyyy-mm-dd",
-  integer_format = "#,###0",
-  double_format = "#,###.00"
-) {
-
-  #sortByColumn=isHidden=NULL
+pbi_schema_column_prop <- function(dt,
+                                   table_name = "table1",
+                                   date_format = "yyyy-mm-dd",
+                                   integer_format = "#,###0",
+                                   double_format = "#,###.00") {
 
   cols <- names(dt)
   data_types <- sapply(dt, pbi_schema_types_infer)
