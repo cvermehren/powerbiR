@@ -18,9 +18,6 @@ Deletes the entire dataset.
 Deletes the specified dataset from the specified workspace. Applicable to
 push datasets as well as imported datasets.
 }
-\details{
-Required scope: Dataset.ReadWrite.All
-}
 \examples{
 
 \dontrun{

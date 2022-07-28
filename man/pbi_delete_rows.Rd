@@ -20,9 +20,6 @@ All rows will be deleted from the specified table.
 Deletes all rows from the specified table within the specified dataset
 from the specified workspace (group ID). Only applicable to push datasets.
 }
-\details{
-Required scope: Dataset.ReadWrite.All
-}
 \examples{
 
 \dontrun{

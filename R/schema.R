@@ -164,16 +164,16 @@ pbi_schema_create <- function(
 #'
 #' @examples
 #' # An example
-pbi_schema_relation_create <- function(from_table,
-                                       from_column,
-                                       to_table,
+pbi_schema_relation_create <- function(from_table = NULL,
+                                       from_column = NULL,
+                                       to_table = NULL,
                                        to_column = from_column,
                                        direction = c("OneDirection", "BothDirections", "Automatic"),
                                        name = paste0(from_table, to_table, from_column)) {
 
-  # if(!exists("from_table")) stop("Please specify the table from which the relationship starts (from_table)")
-  # if(!exists("from_column")) stop("Please specify the joining key column in the 'from_table'")
-  # if(!exists("to_table")) stop("Please specify the table at which the relationship ends (to_table)")
+  if(is.null(from_table)) stop("Please specify the table from which the relationship starts (from_table)")
+  if(is.null(from_column)) stop("Please specify the joining key column in the 'from_table'")
+  if(is.null(to_table)) stop("Please specify the table at which the relationship ends (to_table)")
 
   direction <- match.arg(direction)
 
