@@ -132,8 +132,6 @@ pbi_dataset_refresh_hist <- function(group_id,
 
     message("Refresh status of ", request_id, ":\n", refresh_status)
 
-
-
     return(refresh_status)
 
   } else {
