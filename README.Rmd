@@ -18,19 +18,31 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The main goal of this package is to make it easy to implement real-time
-dashboards using R and the Power BI REST API.
+The main goal of this package is to make it easy to implement (near) real-time
+dashboards using R and the Power BI REST APIs.
 
 The following workflow is supported:
 
 - Create an empty Power BI push dataset from a list of data frames 
-- Upload this dataset to Power BI Service 
+- Upload this empty dataset to your Power BI Service account
 - Populate the dataset with data 
-- Push new data continuously to the dataset
+- Append new data at short intervals to the dataset
 
-A set of functions is also provided for managing administrative tasks such as
-getting a list of datasets, refreshing imported datasets, monitor refresh
+The package includes a set of functions for managing administrative tasks such 
+as getting a list of datasets, refreshing imported datasets, monitoring refresh 
 statuses and pulling useful metadata about workspaces and users.
+
+
+## Motivation
+
+The powerbiR package was developed as part of a project aiming to create a 
+Google Analytics 4 (GA4) dashboard with live data during Black Friday. 
+
+GA4 can stream data directly to Google BigQuery. From there you can pull data 
+every few minutes and push them to Power BI using this package. 
+
+Live GA4 data are especially valuable for online retailers who want to optimize 
+their digital campaigns during important events such as Black Friday.
 
 
 ## Installation
@@ -45,10 +57,148 @@ devtools::install_github("cvermehren/powerbiR")
 
 ## Authentication
 
-To authenticate, you first of all need to create an app in the Power BI
-Developer’s portal. This app will provide us with a reusable Client ID and a
-Client Secret key, using which we can generate the embed token required for the
-REST API.
+To authenticate, you first of all need to create a service principal with 
+permission to use Power BI REST APIs. This requires permission to create an 
+Azure AD Security Group and the Power BI Admin role.
+
+The overall steps are:
+
+- Create a service principal (app registration) in Azure, including a client 
+  secret, and add it to a security group
+- Enable service principals to use Power BI APIs in the Power BI Admin Portal 
+  and apply this to the security group
+- Add the service principal (the app) as a member of the relevant Power BI 
+  workspaces
+- Use the tenant ID, app ID and client secret of the service principal to 
+  authenticate with `pbi_auth()`
+
+The client secret is available immediately after creating it during app 
+registration. The tenant and app IDs can be found on the overview page of your 
+registered app in Azure.
+
+See [Microsoft's guidelines](https://docs.microsoft.com/en-us/power-bi/developer/embedded/embed-service-principal#create-a-security-group-manually) or this [article](https://forwardforever.com/how-to-use-service-principal-in-power-bi-admin-rest-api-in-power-automate/) for more details on using service principals for the Power BI Rest APIs.
+
+
+#### Basic authentication
+
+Using credentials from a service principal, you can authenticate in the 
+following way:
+
+
+```{r, eval = FALSE}
+library(powerbiR)
+
+pbi_auth(
+  tenant = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", # The tenant ID
+  app = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",    # The app ID
+  password = "****"                                # The client secret
+  )
+```
+
+
+#### Using environment variables
+
+Exposing credentials directly in your code is not recommended. A better way is 
+to save them as environment variables in a file named `.Renviron`. 
+
+The file should specify your credentials like this:
+
+```{r, eval = FALSE}
+PBI_TENANT = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"   # The tenant ID 
+PBI_APP = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"      # The app ID
+PBI_PW = "****"                                       # The client secret
+```
+
+By default `pbi_auth()` retrieves these variables using `Sys.getenv()`, which 
+means you can authenticate without modifying the arguments of the function: 
+
+```{r, eval=FALSE}
+pbi_auth() # Authentication with environment variables in the .Renviron file
+```
+
+#### Automatic token refresh
+
+Authentication is based on a token returned by Azure when you call `pbi_auth()`. 
+This token has an expiration time, usually one hour after retrieval. 
+
+The powerbiR package includes automatic refresh of the token after expiration, 
+which means you only need to authenticate once during an R session.
+
+
+## Pushing data to Power BI
+
+After successful authentication, you can start pushing data to a Power BI 
+workspace.
+
+The first step is to get the ID of the workspace (in the API referred to as 
+group ID):
+
+```{r, eval=FALSE}
+# Get a list of workspace IDs
+group_ids <- pbi_list_groups()
+
+# Get the ID of the relevant workspace
+group_ids <- group_ids$id[1]
+```
+
+
+A Power BI dataset consists of a number of tables which may or may 
+not be related with primary and foreign keys. Each column in each table must be 
+defined 
+
+Suppose you 
+simply want to push the `iris` data frame to your Power BI workspace.
+
+You can do this in three simple steps:
+
+1. Infer the Power BI schema from the `iris` data frame:
+```{r, eval = FALSE}
+schema <- pbi_schema_create(
+  dt_list = list(iris),                # This is the data frame you want to push
+  dataset_name = "The iris dataset",   # This is the dataset name you will see in Power BI
+  table_name_list = "iris"             # This is the table name you will see in Power BI
+  )
+```
+
+2. Push the schema to your Power BI workspace:
+```{r, eval = FALSE}
+# Get the workspace ID from its URL in Power BI Service
+# or retrieve it through pbi_list_groups()
+workspace_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+pbi_push_dataset(schema, workspace_id)
+```
+
+3. Append data to the schema:
+```{r, eval = FALSE}
+
+# Retrieve 
+
+pbi_push_rows(iris, workspace_id)
+
+```
+
+
+
+
+
+
+
+```{r, eval = FALSE}
+
+schema
+# $name
+# [x] "The iris dataset"
+# 
+# $defaultMode
+# [x] "Push"
+# 
+# $tables
+# $tables[[1]]
+#    name           columns
+# 1: iris <data.table[5x3]>
+```
+
 
 
 ## Example
