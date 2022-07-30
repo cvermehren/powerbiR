@@ -35,10 +35,20 @@ pbi_push_dataset <- function(schema,
 
   resp <- httr::POST(url, header, body = schema, encode = "json")
 
-  if (httr::http_error(resp)) {stop(httr::content(resp), call. = FALSE)}
+  if (httr::http_error(resp)) {
+
+    stop(httr::content(resp), call. = FALSE)
+
+  } else {
+
+    pushed_dataset_id <- httr::content(resp)$id
+
+    }
 
   message("Successfully added dataset schema to the workspace with ID ",
           group_id )
+
+  return(pushed_dataset_id)
 
 }
 

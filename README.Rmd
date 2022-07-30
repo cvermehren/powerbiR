@@ -18,13 +18,13 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The main goal of this package is to make it easy to implement (near) real-time
+The goal of this package is to make it easy to implement (near) real-time
 dashboards using R and the Power BI REST APIs.
 
 The following workflow is supported:
 
-- Create an empty Power BI push dataset from a list of data frames 
-- Upload this empty dataset to your Power BI Service account
+- Create a Power BI push dataset schema from a list of data frames 
+- Upload this schema as an empty dataset to a Power BI workspace
 - Populate the dataset with data 
 - Append new data at short intervals to the dataset
 
@@ -57,18 +57,18 @@ devtools::install_github("cvermehren/powerbiR")
 
 ## Authentication
 
-To authenticate, you first of all need to create a service principal with 
-permission to use Power BI REST APIs. This requires permission to create an 
-Azure AD Security Group and the Power BI Admin role.
+To authenticate, you first of all need to create a service principal in Azure 
+that can access Power BI REST APIs. This requires permission to create an Azure 
+AD Security Group and the Power BI Admin role.
 
 The overall steps are:
 
 - Create a service principal (app registration) in Azure, including a client 
   secret, and add it to a security group
 - Enable service principals to use Power BI APIs in the Power BI Admin Portal 
-  and apply this to the security group
-- Add the service principal (the app) as a member of the relevant Power BI 
-  workspaces
+  and apply this setting to the security group
+- Add the service principal (the app) as a member of the Power BI workspaces to 
+  which you want to push data
 - Use the tenant ID, app ID and client secret of the service principal to 
   authenticate with `pbi_auth()`
 
@@ -76,14 +76,13 @@ The client secret is available immediately after creating it during app
 registration. The tenant and app IDs can be found on the overview page of your 
 registered app in Azure.
 
-See [Microsoft's guidelines](https://docs.microsoft.com/en-us/power-bi/developer/embedded/embed-service-principal#create-a-security-group-manually) or this [article](https://forwardforever.com/how-to-use-service-principal-in-power-bi-admin-rest-api-in-power-automate/) for more details on using service principals for the Power BI Rest APIs.
+See [Microsoft's guidelines](https://docs.microsoft.com/en-us/power-bi/developer/embedded/embed-service-principal#create-a-security-group-manually) and the first few sections of this [article](https://forwardforever.com/how-to-use-service-principal-in-power-bi-admin-rest-api-in-power-automate/) 
+for more details on using service principals for the Power BI Rest APIs.
 
 
 #### Basic authentication
 
-Using credentials from a service principal, you can authenticate in the 
-following way:
-
+Using a service principal, you can authenticate in the following way:
 
 ```{r, eval = FALSE}
 library(powerbiR)
@@ -99,9 +98,10 @@ pbi_auth(
 #### Using environment variables
 
 Exposing credentials directly in your code is not recommended. A better way is 
-to save them as environment variables in a file named `.Renviron`. 
+to save them as environment variables in a file named `.Renviron`.
 
-The file should specify your credentials like this:
+This is supported by `pbi_auth()` if you specify your credentials in the 
+`.Renviron` like this:
 
 ```{r, eval = FALSE}
 PBI_TENANT = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"   # The tenant ID 
@@ -110,64 +110,113 @@ PBI_PW = "****"                                       # The client secret
 ```
 
 By default `pbi_auth()` retrieves these variables using `Sys.getenv()`, which 
-means you can authenticate without modifying the arguments of the function: 
+means you can now authenticate without modifying the arguments of the function: 
 
 ```{r, eval=FALSE}
-pbi_auth() # Authentication with environment variables in the .Renviron file
+# Authentication with environment variables in the .Renviron file
+pbi_auth()
 ```
+
 
 #### Automatic token refresh
 
 Authentication is based on a token returned by Azure when you call `pbi_auth()`. 
 This token has an expiration time, usually one hour after retrieval. 
 
-The powerbiR package includes automatic refresh of the token after expiration, 
+The powerbiR package handles automatic refresh of the token after expiration, 
 which means you only need to authenticate once during an R session.
 
 
-## Pushing data to Power BI
+## Create a Power BI dataset schema
 
 After successful authentication, you can start pushing data to a Power BI 
-workspace.
+workspace. The first step is to create a schema for a Power BI dataset which 
+includes definitions of tables, relationships, columns and column formats. 
 
-The first step is to get the ID of the workspace (in the API referred to as 
-group ID):
+The powerbiR package automates this task as far as possible by inferring data 
+types and generating list objects with definitions from the data frames you want 
+to push to Power BI.
 
 ```{r, eval=FALSE}
-# Get a list of workspace IDs
-group_ids <- pbi_list_groups()
+# Load the demo data included in this package
+data(dim_hour)
+data(fact_visitors)
 
-# Get the ID of the relevant workspace
-group_ids <- group_ids$id[1]
-```
+# Define the Power BI dataset with one or more data frames
+dataset_name <- c("Online Visitors")
+table_names  <- c("visitors", "hour")
+table_list <- list(fact_visitors, dim_hour)
 
-
-A Power BI dataset consists of a number of tables which may or may 
-not be related with primary and foreign keys. Each column in each table must be 
-defined 
-
-Suppose you 
-simply want to push the `iris` data frame to your Power BI workspace.
-
-You can do this in three simple steps:
-
-1. Infer the Power BI schema from the `iris` data frame:
-```{r, eval = FALSE}
-schema <- pbi_schema_create(
-  dt_list = list(iris),                # This is the data frame you want to push
-  dataset_name = "The iris dataset",   # This is the dataset name you will see in Power BI
-  table_name_list = "iris"             # This is the table name you will see in Power BI
+# Define one or more relationships between tables (here only from_column is
+# specified since to_column has the same name)
+relation <- list(
+  pbi_schema_relation_create(
+    from_table = "visitors",
+    from_column = "hour_key",
+    to_table = "hour"
+    )
   )
+
+# Create the schema
+ schema <- pbi_schema_create(
+   dt_list = table_list,
+   dataset_name = dataset_name,
+   table_name_list = table_names,
+   relations_list = relation
+   )
+
 ```
 
-2. Push the schema to your Power BI workspace:
+This schema returns a list object designed to be converted into JSON and used as 
+the body in a request to the Power REST API.
+
+
+## Upload the schema to Power BI
+
+The next step is to upload the schema as an empty dataset to a Power BI 
+workspace. Before doing so, you need to obtain the ID of the workspace you are 
+planning to push data to.
+
+```{r, eval=FALSE}
+# Get a data frame with workspaces available to the service principal
+# (workspaces are called "groups" in the API)
+groupid_df <- pbi_list_groups()
+
+# Get the ID of the workspace in question, here we use the first in the list
+groupid <- groupid_df$id[1]
+```
+
+You are now ready to upload the schema.
+
+```{r, eval=FALSE}
+# Push the schema to the specified workspace (groupid) in Power BI
+pbi_push_dataset(schema, groupid)
+```
+
+
+## Populate the dataset with data
+
+The last step is to push data to the empty dataset you have uploaded to Power BI.
+Before doing so, you need to to obtain the ID of the dataset.
+
 ```{r, eval = FALSE}
-# Get the workspace ID from its URL in Power BI Service
-# or retrieve it through pbi_list_groups()
-workspace_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+# Retrieve a data frame with all datasets in the specified workspace (groupid)
+my_datasets <- pbi_list_datasets(groupid)
 
-pbi_push_dataset(schema, workspace_id)
+# Get the ID of the dataset which was just pushed to the workspace
+my_push_dataset_id <- my_datasets[my_datasets$name==dataset_name]$id
 ```
+
+
+
+
+```{r, eval = FALSE}
+# Retrieve 
+
+pbi_push_rows(iris, workspace_id)
+
+```
+
 
 3. Append data to the schema:
 ```{r, eval = FALSE}
@@ -177,51 +226,3 @@ pbi_push_dataset(schema, workspace_id)
 pbi_push_rows(iris, workspace_id)
 
 ```
-
-
-
-
-
-
-
-```{r, eval = FALSE}
-
-schema
-# $name
-# [x] "The iris dataset"
-# 
-# $defaultMode
-# [x] "Push"
-# 
-# $tables
-# $tables[[1]]
-#    name           columns
-# 1: iris <data.table[5x3]>
-```
-
-
-
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
-##library(powerbiR)
-## basic example code
-```
-
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
-
-<!-- You can also embed plots, for example: -->
-
-<!-- ```{r pressure, echo = FALSE} -->
-<!-- plot(pressure) -->
-<!-- ``` -->
-
-<!-- In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN. -->
