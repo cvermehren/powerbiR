@@ -11,7 +11,7 @@ real-time dashboards using R and the Power BI REST APIs.
 
 The following workflow is supported:
 
--   Create a Power BI push dataset schema from a list of data frames
+-   Create a Power BI dataset schema from a list of data frames
 -   Upload this schema as an empty dataset to a Power BI workspace
 -   Populate the dataset with data
 -   Append new data at short intervals to the dataset
@@ -46,7 +46,7 @@ devtools::install_github("cvermehren/powerbiR")
 ## Authentication
 
 To authenticate, you first of all need to create a service principal in
-Azure that can access Power BI REST APIs. This requires permission to
+Azure with access to Power BI REST APIs. This requires permission to
 create an Azure AD Security Group and the Power BI Admin role.
 
 The overall steps are:
@@ -90,8 +90,8 @@ Exposing credentials directly in your code is not recommended. A better
 way is to save them as environment variables in a file named
 `.Renviron`.
 
-This is supported by `pbi_auth()` if you specify your credentials in the
-`.Renviron` like this:
+This is supported by `pbi_auth()` as long as you specify your
+credentials in the `.Renviron` like this:
 
 ``` r
 PBI_TENANT = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"   # The tenant ID 
@@ -218,3 +218,17 @@ dataset APIs (for more details, visit the page [Push datasets
 limitations](https://docs.microsoft.com/en-us/power-bi/developer/embedded/push-datasets-limitations)).
 
 ## Creating reports and dashboards in Power BI
+
+With data in Power BI service you can start building reports and
+dashboards. Although you can do this directly in Power BI service, a
+more flexible approach is to connect to the dataset from Power BI
+Desktop, create your report locally and then publish the .pbix file.
+
+Power BI Desktop has more data-modelling and report-authoring features
+than the online version. You can define new measures and columns using
+DAX and it has more options for controlling visuals, report layout and
+interactivity.
+
+For more details on this appraoch, see [Connect to datasets in the Power
+BI service from Power BI
+Desktop](https://docs.microsoft.com/en-us/power-bi/connect-data/desktop-report-lifecycle-datasets).
