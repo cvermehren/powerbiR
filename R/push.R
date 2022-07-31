@@ -17,11 +17,11 @@
 #'
 #' \dontrun{
 #'
-#' pbi_push_dataset(my_schema, my_group_id)
+#' pbi_push_dataset_schema(my_schema, my_group_id)
 #' }
-pbi_push_dataset <- function(schema,
-                             group_id,
-                             retention = c("none", "basicFIFO")) {
+pbi_push_dataset_schema <- function(schema,
+                                    group_id,
+                                    retention = c("none", "basicFIFO")) {
 
   retention <- match.arg(retention)
 
@@ -43,7 +43,7 @@ pbi_push_dataset <- function(schema,
 
     pushed_dataset_id <- httr::content(resp)$id
 
-    }
+  }
 
   message("Successfully added dataset schema to the workspace with ID ",
           group_id )

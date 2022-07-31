@@ -180,33 +180,41 @@ You are now ready to upload the schema.
 
 ``` r
 # Push the schema to the specified workspace (groupid) in Power BI
-pbi_push_dataset(schema, groupid)
+new_dataset_id <- pbi_push_dataset_schema(schema, groupid)
+#> Successfully added dataset schema to the workspace with ID xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
+
+The above function returns the ID of the created dataset. You need this
+for populating the dataset with data.
 
 ## Populate the dataset with data
 
-The last step is to push data to the empty dataset you have uploaded to
-Power BI. Before doing so, you need to to obtain the ID of the dataset.
+The last step is to push data to the empty dataset you have just created
+in Power BI.
 
 ``` r
-# Retrieve a data frame with all datasets in the specified workspace (groupid)
-my_datasets <- pbi_list_datasets(groupid)
-
-# Get the ID of the dataset which was just pushed to the workspace
-my_push_dataset_id <- my_datasets[my_datasets$name==dataset_name]$id
+# Using the new_dataset_id, iterate over the list of tables in the dataset
+for (i in seq_along(table_list)) {
+  pbi_push_rows(
+    dt = table_list[[i]], 
+    group_id = group_id, 
+    dataset_id = new_dataset_id, 
+    table_name = table_names[i],
+    overwrite = FALSE
+    )
+}
+#> Successfully added 10000 rows to visitors
+#> Successfully added 33 rows to visitors
+#> Successfully added 24 rows to hour
 ```
 
-``` r
-# Retrieve 
+The visitors data frame has 10,033 observations. `pbi_push_rows`
+automatically splits the data frame into chunks of 10K rows before
+uploading since the Power BI API has a limit of 10K rows per request.
 
-pbi_push_rows(iris, workspace_id)
-```
+Using the above for-loop, you can append new data to the dataset at
+short intervals as long as you don’t exceed the limitations of the push
+dataset APIs (for more details, visit the page [Push datasets
+limitations](https://docs.microsoft.com/en-us/power-bi/developer/embedded/push-datasets-limitations)).
 
-3.  Append data to the schema:
-
-``` r
-
-# Retrieve 
-
-pbi_push_rows(iris, workspace_id)
-```
+## Creating reports and dashboards in Power BI
