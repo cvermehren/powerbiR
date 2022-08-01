@@ -235,8 +235,8 @@ Although you can do this directly in Power BI service, a more flexible approach
 is to connect to the dataset from Power BI Desktop, create your report locally
 and then publish the .pbix file.
 
-Power BI Desktop has more data-modelling and report-authoring features than the 
+Power BI Desktop has more data-modeling and report-authoring features than the 
 online version. You can define new measures and columns using DAX and it has 
 more options for controlling visuals, report layout and interactivity. 
 
-For more details on this appraoch, see [Connect to datasets in the Power BI service from Power BI Desktop](https://docs.microsoft.com/en-us/power-bi/connect-data/desktop-report-lifecycle-datasets).
+For more details on this approach, see [Connect to datasets in the Power BI service from Power BI Desktop](https://docs.microsoft.com/en-us/power-bi/connect-data/desktop-report-lifecycle-datasets).

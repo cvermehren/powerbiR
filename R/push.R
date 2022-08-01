@@ -67,7 +67,7 @@ pbi_push_dataset_schema <- function(schema,
 #' Required scope: Dataset.ReadWrite.All
 #'
 #' @param dt A data frame with rows to be added to the specified Power BI table
-#'   (table_name). The columns and datatypes must match the specified table.
+#'   (table_name). The columns and data types must match the specified table.
 #' @param group_id The ID of the destination Power BI workspace.
 #' @param dataset_id The ID of the destination Power BI dataset.
 #' @param table_name The name of the destination Power BI table.

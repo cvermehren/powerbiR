@@ -94,7 +94,7 @@ pbi_dataset_refresh_hist <- function(group_id,
                                      request_id = NULL) {
 
   # Due to notes in R CMD check
-  value=requestId=serviceExceptionJson=NULL
+  value=requestId <- serviceExceptionJson <- NULL
 
   token <- pbi_get_token()
 
@@ -124,7 +124,7 @@ pbi_dataset_refresh_hist <- function(group_id,
     rbindlist(lapply(serviceExceptionJson, jsonlite::fromJSON), use.names = TRUE, fill = TRUE),
     by = list(requestId)]
 
-  value <- merge(value, error_messages, all.x = T, by = "requestId")
+  value <- merge(value, error_messages, all.x = TRUE, by = "requestId")
 
   if(!is.null(request_id)) {
 
