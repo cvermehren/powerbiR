@@ -43,6 +43,9 @@ By default the function will return all historical refreshes. You
 
 \dontrun{
 
+group_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+dataset_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
 pbi_dataset_refresh_hist(group_id, dataset_id)
 }
 }

@@ -7,7 +7,7 @@
 pbi_list_groups()
 }
 \value{
-A data.table / data frame with workspaces.
+A data frame with workspaces.
 }
 \description{
 Returns the ids and meta data of all Power BI workspaces to which the service

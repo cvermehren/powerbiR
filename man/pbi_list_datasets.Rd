@@ -14,12 +14,14 @@ A data.table / data frame with dataset information.
 }
 \description{
 Returns the IDs and meta data of all available datasets in the specified
-Power BI workspace.
+Power BI workspace (group ID).
 }
 \examples{
 
 \dontrun{
 
-pbi_list_datasets(my_group_id)
+group_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+pbi_list_datasets(group_id)
 }
 }

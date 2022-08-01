@@ -47,13 +47,21 @@ batch script. For more details, see
 \examples{
 
 \dontrun{
-# Set token in environment
+
+# Basic authentications
+pbi_auth(
+tenant = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", # The tenant ID
+app = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",    # The app ID
+password = "****"                                # The client secret
+)
+
+# Using environment variables
 Sys.setenv(
   PBI_TENANT = "my_tenant_id",
   PBI_APP = "my_app_id",
   PBI_PW = "my_app_client_secret"
   )
 
-  pbi_auth()
+pbi_auth()
 }
 }

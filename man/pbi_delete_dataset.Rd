@@ -22,6 +22,9 @@ push datasets as well as imported datasets.
 
 \dontrun{
 
+group_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+dataset_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
 pbi_delete_dataset(group_id, dataset_id)
 }
 }

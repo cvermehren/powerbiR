@@ -25,6 +25,14 @@ the dataset, use pbi_push_rows().
 
 \dontrun{
 
-pbi_push_dataset_schema(my_schema, my_group_id)
+group_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+schema <- pbi_schema_create(
+  dt_list = list(iris),
+  dataset_name = "The iris dataset",
+  table_name_list = list(iris)
+)
+
+pbi_push_dataset_schema(schema, group_id)
 }
 }

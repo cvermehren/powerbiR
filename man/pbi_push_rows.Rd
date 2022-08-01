@@ -38,6 +38,9 @@ other limitations of the API. See
 
 \dontrun{
 
-pbi_push_rows(my_data, my_group_id)
+group_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+dataset_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+pbi_push_rows(group_id, dataset_id, "My table")
 }
 }

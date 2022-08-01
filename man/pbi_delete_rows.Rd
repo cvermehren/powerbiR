@@ -24,6 +24,10 @@ from the specified workspace (group ID). Only applicable to push datasets.
 
 \dontrun{
 
+group_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+dataset_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+table_name <- "My Table"
+
 pbi_delete_rows(group_id, dataset_id, table_name)
 }
 }
