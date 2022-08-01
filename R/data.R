@@ -4,7 +4,7 @@
 #'
 #' @format A data frame with 24 rows and 2 columns:
 #' \describe{
-#'   \item{hour_key}{Primary key (unique identifyer of hour).}
+#'   \item{hour_key}{Primary key (unique identifier of hour).}
 #'   \item{hour}{Hour as a name (character type).}
 #'   }
 #'

@@ -3,8 +3,6 @@
 #' Pushes a dataset schema to the specified Power BI workspace. To add rows to
 #' the dataset, use pbi_push_rows().
 #'
-#' Required scope: Dataset.ReadWrite.All
-#'
 #' @param schema A push-dataset schema created by pbi_schema_create().
 #' @param group_id The ID of the destination Power BI workspace.
 #' @param retention The retention policy of the dataset. Default is "none".
@@ -63,8 +61,6 @@ pbi_push_dataset_schema <- function(schema,
 #' pushing these chunks one at a time. However, you should manually observe the
 #' other limitations of the API. See
 #' \url{https://docs.microsoft.com/en-au/rest/api/power-bi/} for more details.
-#'
-#' Required scope: Dataset.ReadWrite.All
 #'
 #' @param dt A data frame with rows to be added to the specified Power BI table
 #'   (table_name). The columns and data types must match the specified table.

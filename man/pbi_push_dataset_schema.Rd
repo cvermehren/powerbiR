@@ -21,9 +21,6 @@ A dataset with tables will be created in the specified Power BI
 Pushes a dataset schema to the specified Power BI workspace. To add rows to
 the dataset, use pbi_push_rows().
 }
-\details{
-Required scope: Dataset.ReadWrite.All
-}
 \examples{
 
 \dontrun{

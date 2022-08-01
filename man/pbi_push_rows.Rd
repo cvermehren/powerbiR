@@ -8,7 +8,7 @@ pbi_push_rows(dt, group_id, dataset_id, table_name, overwrite = FALSE)
 }
 \arguments{
 \item{dt}{A data frame with rows to be added to the specified Power BI table
-(table_name). The columns and datatypes must match the specified table.}
+(table_name). The columns and data types must match the specified table.}
 
 \item{group_id}{The ID of the destination Power BI workspace.}
 
@@ -33,8 +33,6 @@ is handled by splitting the data frame into chunks of 10K rows each and
 pushing these chunks one at a time. However, you should manually observe the
 other limitations of the API. See
 \url{https://docs.microsoft.com/en-au/rest/api/power-bi/} for more details.
-
-Required scope: Dataset.ReadWrite.All
 }
 \examples{
 
