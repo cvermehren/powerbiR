@@ -3,7 +3,7 @@
 #' Returns the ids and meta data of all Power BI workspaces to which the service
 #' principal app has been granted access.
 #'
-#' @return A data.table / data frame with workspaces.
+#' @return A data frame with workspaces.
 #' @export
 #'
 #' @examples
@@ -40,7 +40,7 @@ pbi_list_groups <- function() {
 #' Get a list of datasets in a workspace
 #'
 #' Returns the IDs and meta data of all available datasets in the specified
-#' Power BI workspace.
+#' Power BI workspace (group ID).
 #'
 #' @param group_id The Power BI workspace ID.
 #'
@@ -51,7 +51,9 @@ pbi_list_groups <- function() {
 #'
 #' \dontrun{
 #'
-#' pbi_list_datasets(my_group_id)
+#' group_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+#'
+#' pbi_list_datasets(group_id)
 #' }
 pbi_list_datasets <- function(group_id) {
 

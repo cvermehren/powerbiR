@@ -13,19 +13,9 @@
 #'
 #' \dontrun{
 #'
-#' # View Power BI workspaces (group IDs) available to your session
-#' available_ws <- pbi_list_groups()
-#'
-#' # Select a workspace
-#' workspace <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-#'
-#' # View datasets in the workspace
-#' available_dataset_ids <- pbi_list_datasets(group_id = workspace)
-#'
-#' # Select a dataset to refresh
+#' group_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 #' dataset_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 #'
-#' # Refresh the dataset
 #' pbi_dataset_refresh(group_id, dataset_id)
 #' #> A refresh of dataset xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx was triggered.
 #' #>
@@ -85,6 +75,9 @@ pbi_dataset_refresh <- function(group_id, dataset_id) {
 #' @examples
 #'
 #' \dontrun{
+#'
+#' group_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+#' dataset_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 #'
 #' pbi_dataset_refresh_hist(group_id, dataset_id)
 #' }

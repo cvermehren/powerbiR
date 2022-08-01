@@ -14,6 +14,10 @@
 #'
 #' \dontrun{
 #'
+#' group_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+#' dataset_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+#' table_name <- "My Table"
+#'
 #' pbi_delete_rows(group_id, dataset_id, table_name)
 #' }
 pbi_delete_rows <- function(group_id, dataset_id, table_name) {
@@ -47,6 +51,9 @@ pbi_delete_rows <- function(group_id, dataset_id, table_name) {
 #' @examples
 #'
 #' \dontrun{
+#'
+#' group_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+#' dataset_id <- "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 #'
 #' pbi_delete_dataset(group_id, dataset_id)
 #' }
