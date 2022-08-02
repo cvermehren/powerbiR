@@ -3,7 +3,7 @@ Type: Package
 Title: A Power BI API Client
 Version: 0.1.0
 Authors@R: person("Christian", "Vermehren", email = "cv@cantab.net",
-  role = c("aut", "cre"))
+    role = c("aut", "cre"))
 Description: Provides functions for accessing and pushing data 
     using the Power BI API <https://docs.microsoft.com/en-us/rest/api/power-bi/>.
 License: MIT + file LICENSE
@@ -19,7 +19,7 @@ Imports:
 Suggests: 
     spelling,
     testthat (>= 3.0.0)
-Config/testthat/edition: 3
+    Config/testthat/edition: 3
 Depends: 
-    R (>= 2.10)
+    R (>= 4.2.0)
 Language: en-US
