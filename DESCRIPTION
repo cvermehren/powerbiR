@@ -17,9 +17,7 @@ Imports:
     utils,
     AzureAuth
 Suggests: 
-    spelling,
-    testthat (>= 3.0.0)
-    Config/testthat/edition: 3
+    spelling
 Depends: 
     R (>= 4.2.0)
 Language: en-US
