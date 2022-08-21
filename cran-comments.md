@@ -1,3 +1,12 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Put software names and APIs in single quote in the title and description in 
+  the DESCRIPTION file.
+
+* Added more details about the package functionality and implemented
+  methods in the Description text.
+
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
 
