@@ -1,11 +1,16 @@
 Package: powerbiR
 Type: Package
-Title: A Power BI API Client
+Title: An Interface to the 'Power BI REST APIs'
 Version: 0.1.0
 Authors@R: person("Christian", "Vermehren", email = "cv@cantab.net",
     role = c("aut", "cre"))
-Description: Provides functions for accessing and pushing data 
-    using the Power BI API <https://docs.microsoft.com/en-us/rest/api/power-bi/>.
+Description: This package makes it easy to create datasets in 'Power BI' using R 
+    and the 'Power BI REST APIs' (see <https://docs.microsoft.com/en-us/rest/api/power-bi/>).
+    It includes functions for creating 'Power BI' dataset-schemas, pushing 
+    these schemas to 'Power BI' and populating the schemas with data. It also 
+    enable you to manage a number of administrative tasks such as getting a list 
+    of datasets, refreshing datasets, monitoring refresh statuses and pulling 
+    useful metadata about workspaces and users.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
