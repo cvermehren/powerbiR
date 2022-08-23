@@ -4,13 +4,12 @@ Title: An Interface to the 'Power BI REST APIs'
 Version: 0.1.0
 Authors@R: person("Christian", "Vermehren", email = "cv@cantab.net",
     role = c("aut", "cre"))
-Description: This package makes it easy to create datasets in 'Power BI' using R 
-    and the 'Power BI REST APIs' (see <https://docs.microsoft.com/en-us/rest/api/power-bi/>).
-    It includes functions for creating 'Power BI' dataset-schemas, pushing 
-    these schemas to 'Power BI' and populating the schemas with data. It also 
-    enable you to manage a number of administrative tasks such as getting a list 
-    of datasets, refreshing datasets, monitoring refresh statuses and pulling 
-    useful metadata about workspaces and users.
+Description: Makes it easy to push data to 'Power BI' using R and the 'Power BI 
+    REST APIs' (see <https://docs.microsoft.com/en-us/rest/api/power-bi/>). 
+    A set of functions for turning data frames into 'Power BI' datasets and 
+    refreshing these datasets are provided. Administrative tasks such as 
+    monitoring refresh statuses and pulling metadata about workspaces and users
+    are also supported.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

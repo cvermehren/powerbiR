@@ -1,6 +1,8 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
+* Changed the Description text so that it does not start with 'This package...'
+
 * Put software names and APIs in single quote in the title and description in 
   the DESCRIPTION file.
 
