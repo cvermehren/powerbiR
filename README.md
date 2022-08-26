@@ -35,8 +35,14 @@ Friday.
 
 ## Installation
 
-You can install the development version of powerbiR from
-[GitHub](https://github.com/) with:
+You can install the released version of `powerbiR` from
+[CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("powerbiR")
+```
+
+And the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
